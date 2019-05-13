@@ -42,21 +42,25 @@ public class LocationService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
 
         Toast.makeText(getBaseContext(), "Service Started", Toast.LENGTH_SHORT).show();
-
+        //thread to run the code
         final Runnable r = new Runnable() {
             public void run() {
-                Log.v("Debug", "Hello");
+                //Log.v("Debug", "starting up thread");
                 location();
+                //delay in milli, when in the background or something we need to delaty this
                 handler.postDelayed(this, 5000);
             }
         };
+        //delay in milli, when in the background or something we need to delaty this
         handler.postDelayed(r, 5000);
+        //https://stackoverflow.com/questions/9093271/start-sticky-and-start-not-sticky
         return START_STICKY;
     }
 
+    //location updates
     public void location() {
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-
+        //get permissions, might be redundant, but fine for more error checking
         try {
             gps_enabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
         } catch (Exception ex) {
@@ -78,10 +82,14 @@ public class LocationService extends Service {
             }
         }
         if (network_enabled) {
-            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                   != PackageManager.PERMISSION_GRANTED
+                 && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
+                    != PackageManager.PERMISSION_GRANTED) {
+                return;
+            }else{
                 locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locListener);
                 Log.v("Debug", "Disabled..");
-                return;
             }
         }
         Log.v("Debug", "in on create..3");
@@ -101,7 +109,7 @@ public class LocationService extends Service {
             if(location != null){
                 locationManager.removeUpdates(locListener);
                 lat_new = location.getLongitude();
-                lon_new =location.getLatitude();
+                lon_new = location.getLatitude();
                 String longitude = "Longitude: " +location.getLongitude();
                 String latitude = "Latitude: " +location.getLatitude();
                 double distance = CalculationByDistance(lat_new, lon_new, lat_old, lon_old);
