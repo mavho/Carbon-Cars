@@ -39,6 +39,7 @@ public class LocationService extends Service {
     public void onDestroy() {
         Toast.makeText(getBaseContext(),total_distance + " km", Toast.LENGTH_LONG).show();
         handler.removeCallbacks(rt);
+        locationManager.removeUpdates(locListener);
     }
 
     @Override
