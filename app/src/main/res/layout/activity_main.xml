@@ -5,12 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
+
     <Button
         android:id="@+id/location_service_but"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="Start Location tracker"
         android:onClick="startService"
+        android:text="Start Location tracker"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -18,10 +19,12 @@
 
     <Button
         android:id="@+id/stop_location_serv_but"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Stop Location Tracker"
         android:onClick="stopService"
+        android:text="Stop Location Tracker"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/location_service_but" />
 
     <Button
@@ -38,6 +41,16 @@
         app:layout_constraintStart_toStartOf="@+id/location_service_but"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.83" />
+
+    <Button
+        android:id="@+id/historybutton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginBottom="14dp"
+        android:text="History"
+        app:layout_constraintBottom_toTopOf="@+id/dataVizButton"
+        app:layout_constraintStart_toStartOf="@+id/dataVizButton" />
 
 
 </android.support.constraint.ConstraintLayout>
