@@ -27,6 +27,15 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         Button dataVizButton = findViewById(R.id.dataVizButton);
+        Button historyButton = findViewById(R.id.historybutton);
+
+        historyButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent historyIntent = new Intent(getApplicationContext(), tripHistory.class);
+                startActivity(historyIntent);
+            }
+        });
 
         dataVizButton.setOnClickListener(new View.OnClickListener() {
             @Override
