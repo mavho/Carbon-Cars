@@ -14,14 +14,20 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+        <activity android:name=".MonthlyActivity"></activity>
+        <activity android:name=".WeeklyActivity" />
+
         <service
             android:name=".LocationService"
             android:enabled="true"
-            android:exported="true"></service>
+            android:exported="true" />
 
         <activity android:name=".DatavizActivity" />
+<<<<<<< HEAD
         <activity android:name=".tripHistory"></activity>
 
+=======
+>>>>>>> 484040ba7a44ddbfecb6fc370485cc9e8db5f772
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
