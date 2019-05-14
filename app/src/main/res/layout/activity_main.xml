@@ -24,5 +24,20 @@
         android:onClick="stopService"
         app:layout_constraintTop_toBottomOf="@+id/location_service_but" />
 
+    <Button
+        android:id="@+id/dataVizButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:text="Data Viz"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/location_service_but"
+        app:layout_constraintHorizontal_bias="0.511"
+        app:layout_constraintStart_toStartOf="@+id/location_service_but"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.83" />
+
 
 </android.support.constraint.ConstraintLayout>
