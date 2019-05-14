@@ -13,19 +13,17 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.support.v4.app.ActivityCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.View;
-import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
+
 
 public class LocationService extends Service {
     private LocationManager locationManager;
     private LocationListener locListener = new myLocationListener();
-
+    public int total_distance = 0;
     private boolean gps_enabled = false;
     private boolean network_enabled = false;
-
     private Handler handler = new Handler();
     private Runnable rt;
     @Override
@@ -39,7 +37,7 @@ public class LocationService extends Service {
 
     @Override
     public void onDestroy() {
-        Log.v("Debug", "onDestroy called");
+        Toast.makeText(getBaseContext(),total_distance + " km", Toast.LENGTH_LONG).show();
         handler.removeCallbacks(rt);
     }
 
@@ -108,6 +106,7 @@ public class LocationService extends Service {
         double lon_new;
         double time = 10.00;
         double speed = 0.0;
+        int count = 0;
 
         @Override
         public void onLocationChanged(Location location) {
@@ -118,11 +117,19 @@ public class LocationService extends Service {
                 lon_new = location.getLatitude();
                 String longitude = "Longitude: " +location.getLongitude();
                 String latitude = "Latitude: " +location.getLatitude();
-                double distance = CalculationByDistance(lat_new, lon_new, lat_old, lon_old);
+                double distance;
+                if (count == 0){
+                    distance = CalculationByDistance(lat_new, lon_new, lat_new, lon_new);
+                    count++;
+                }else{
+                    distance = CalculationByDistance(lat_new, lon_new, lat_old, lon_old);
+                }
+                total_distance += distance;
                 //speed
                 speed = distance/time;
                 Toast.makeText(getApplicationContext(), longitude+"\n"+latitude+"\nDistance is: "
-                        +distance+"\nSpeed is: "+speed , Toast.LENGTH_SHORT).show();
+                        +distance+"\nSpeed is: "+speed , Toast.LENGTH_LONG).show();
+
                 //update the longitude and latitude after the distance
                 lat_old = lat_new;
                 lon_old = lon_new;
