@@ -13,7 +13,10 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.support.v4.app.ActivityCompat;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 public class LocationService extends Service {
@@ -24,7 +27,7 @@ public class LocationService extends Service {
     private boolean network_enabled = false;
 
     private Handler handler = new Handler();
-
+    private Runnable rt;
     @Override
     public IBinder onBind(Intent intent) {
         return null;
@@ -36,14 +39,15 @@ public class LocationService extends Service {
 
     @Override
     public void onDestroy() {
+        Log.v("Debug", "onDestroy called");
+        handler.removeCallbacks(rt);
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-
         Toast.makeText(getBaseContext(), "Service Started", Toast.LENGTH_SHORT).show();
         //thread to run the code
-        final Runnable r = new Runnable() {
+        rt = new Runnable() {
             public void run() {
                 //Log.v("Debug", "starting up thread");
                 location();
@@ -52,10 +56,12 @@ public class LocationService extends Service {
             }
         };
         //delay in milli, when in the background or something we need to delaty this
-        handler.postDelayed(r, 5000);
+        handler.postDelayed(rt, 5000);
         //https://stackoverflow.com/questions/9093271/start-sticky-and-start-not-sticky
         return START_STICKY;
     }
+
+
 
     //location updates
     public void location() {
