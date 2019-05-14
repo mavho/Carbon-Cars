@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Carbon Cars</string>
+    <string name="co2text">of CO2</string>
+    <string name="co2">of CO2</string>
 </resources>
