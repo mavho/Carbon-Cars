@@ -22,5 +22,15 @@ public class DatavizActivity extends AppCompatActivity {
                 startActivity(monthlyActivityIntent);
             }
         });
+
+        Button weeklyButton = findViewById(R.id.weeklyButton);
+
+        weeklyButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent weeklyActivityIntent = new Intent(getApplicationContext(), WeeklyActivity.class);
+                startActivity(weeklyActivityIntent);
+            }
+        });
     }
 }
