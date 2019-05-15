@@ -9,9 +9,13 @@ import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.utils.ColorTemplate;
+import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
+
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class MonthlyActivity extends AppCompatActivity {
 
@@ -24,37 +28,44 @@ public class MonthlyActivity extends AppCompatActivity {
 
         monthlyBarChart = findViewById(R.id.monthlyBarChart);
 
-        ArrayList NoOfEmp = new ArrayList();
+        monthlyBarChart.setFitBars(true);
 
-        NoOfEmp.add(new BarEntry(945f, 0));
-        NoOfEmp.add(new BarEntry(1040f, 1));
-        NoOfEmp.add(new BarEntry(1133f, 2));
-        NoOfEmp.add(new BarEntry(1240f, 3));
-        NoOfEmp.add(new BarEntry(1369f, 4));
-        NoOfEmp.add(new BarEntry(1487f, 5));
-        NoOfEmp.add(new BarEntry(1501f, 6));
-        NoOfEmp.add(new BarEntry(1645f, 7));
-        NoOfEmp.add(new BarEntry(1578f, 8));
-        NoOfEmp.add(new BarEntry(1695f, 9));
+        ArrayList co2Data = new ArrayList();
 
-//        ArrayList year = new ArrayList();
-//
-//        year.add("2008");
-//        year.add("2009");
-//        year.add("2010");
-//        year.add("2011");
-//        year.add("2012");
-//        year.add("2013");
-//        year.add("2014");
-//        year.add("2015");
-//        year.add("2016");
-//        year.add("2017");
+        co2Data.add(new BarEntry(950f, (float)8.64));
+        co2Data.add(new BarEntry(1050f, randNumber()));
+        co2Data.add(new BarEntry(1150f, randNumber()));
+        co2Data.add(new BarEntry(1250f, randNumber()));
+        co2Data.add(new BarEntry(1350f, randNumber()));
+        co2Data.add(new BarEntry(1450f, randNumber()));
+        co2Data.add(new BarEntry(1550f, randNumber()));
+        co2Data.add(new BarEntry(1650f, randNumber()));
+        co2Data.add(new BarEntry(1750f, randNumber()));
+        co2Data.add(new BarEntry(1850f, randNumber()));
+        co2Data.add(new BarEntry(1950f, randNumber()));
+        co2Data.add(new BarEntry(2050f, randNumber()));
 
-        BarDataSet bardataset = new BarDataSet(NoOfEmp, "Months");
-//        BarDataSet bardataset2 = new BarDataSet(year, "Years");
+        BarDataSet bardataset = new BarDataSet(co2Data, "CO2 Emissions (Kilograms)");
+
+//        bardataset.setStackLabels(new String[] {"January", "February", "March", "April", "May",
+//                "June", "July", "August", "September", "October", "November", "December"});
+
+        String[] labels = {"January", "February", "March", "April", "May",
+                "June", "July", "August", "September", "October", "November", "December"};
+
         monthlyBarChart.animateY(5000);
+
+
         BarData data = new BarData(bardataset);
+
+        data.setBarWidth(30f);
         bardataset.setColors(ColorTemplate.COLORFUL_COLORS);
         monthlyBarChart.setData(data);
+        monthlyBarChart.getXAxis().setValueFormatter(new IndexAxisValueFormatter(labels));
+    }
+
+    float randNumber(){
+        Random random = new Random();
+        return random.nextFloat() * (float)10.0;
     }
 }
