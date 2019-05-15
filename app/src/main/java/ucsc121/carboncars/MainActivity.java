@@ -1,7 +1,6 @@
 package ucsc121.carboncars;
 
 import android.Manifest;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.support.v4.app.ActivityCompat;
@@ -11,8 +10,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-
-import org.w3c.dom.Text;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -66,6 +63,8 @@ public class MainActivity extends AppCompatActivity {
     public void stopService(View view){
         myIntent = new Intent(this,LocationService.class);
         stopService(myIntent);
+        TextView out = findViewById(R.id.total_distance);
+        out.setText("Carbon calculations are calculated after the service stops");
         Log.d("debug", "Service Stopped");
     }
 }

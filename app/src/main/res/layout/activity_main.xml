@@ -28,6 +28,14 @@
         app:layout_constraintTop_toBottomOf="@+id/location_service_but" />
 
     <Button
+        android:id="@+id/total_distance"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="in km"
+        android:textAlignment="center"
+        app:layout_constraintTop_toBottomOf="@+id/stop_location_serv_but" />
+
+    <Button
         android:id="@+id/dataVizButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

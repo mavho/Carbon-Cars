@@ -14,6 +14,7 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.support.v4.app.ActivityCompat;
 import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,6 +27,7 @@ public class LocationService extends Service {
     private boolean network_enabled = false;
     private Handler handler = new Handler();
     private Runnable rt;
+    Intent intent;
     @Override
     public IBinder onBind(Intent intent) {
         return null;
@@ -37,6 +39,7 @@ public class LocationService extends Service {
 
     @Override
     public void onDestroy() {
+        super.onDestroy();
         Toast.makeText(getBaseContext(),total_distance + " km", Toast.LENGTH_LONG).show();
         handler.removeCallbacks(rt);
         locationManager.removeUpdates(locListener);
@@ -44,6 +47,7 @@ public class LocationService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+        this.intent = intent;
         Toast.makeText(getBaseContext(), "Service Started", Toast.LENGTH_SHORT).show();
         //thread to run the code
         rt = new Runnable() {
@@ -59,8 +63,6 @@ public class LocationService extends Service {
         //https://stackoverflow.com/questions/9093271/start-sticky-and-start-not-sticky
         return START_STICKY;
     }
-
-
 
     //location updates
     public void location() {
