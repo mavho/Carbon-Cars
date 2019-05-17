@@ -3,6 +3,7 @@ package ucsc121.carboncars;
 import android.Manifest;
 import android.app.Activity;
 import android.app.Service;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -41,6 +42,7 @@ public class LocationService extends Service {
     public void onDestroy() {
         super.onDestroy();
         Toast.makeText(getBaseContext(),total_distance + " km", Toast.LENGTH_LONG).show();
+        sendBroadcast();
         handler.removeCallbacks(rt);
         locationManager.removeUpdates(locListener);
     }
@@ -62,6 +64,18 @@ public class LocationService extends Service {
         handler.postDelayed(rt, 5000);
         //https://stackoverflow.com/questions/9093271/start-sticky-and-start-not-sticky
         return START_STICKY;
+    }
+
+    //function to send data to an activity
+    private void sendBroadcast(){
+        try{
+            Intent broadCastIntent = new Intent();
+            broadCastIntent.setAction(MainActivity.BROADCAST_ACTION);
+            broadCastIntent.putExtra("data", "test");
+            sendBroadcast(broadCastIntent);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     //location updates
@@ -96,11 +110,11 @@ public class LocationService extends Service {
                 return;
             }else{
                 locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locListener);
-                Log.v("Debug", "Disabled..");
             }
         }
         Log.v("Debug", "in on create..3");
     }
+
 
     private class myLocationListener implements LocationListener {
         double lat_old = 0.0;
