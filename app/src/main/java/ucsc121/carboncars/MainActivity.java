@@ -47,6 +47,11 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    protected void onDestroy(){
+        super.onDestroy();
+        unregisterReceiver(broadCastReceiver);
+    }
     //right now if user allows the thing, they'll have to click the button again to go through the
     //if statement
     public void startService(View view){
@@ -73,6 +78,7 @@ public class MainActivity extends AppCompatActivity {
         Log.d("debug", "Service Stopped");
     }
 
+    //register a broadcast receiver to receive data from our service
     private void registerReceiver(){
         try{
             IntentFilter intentFilter = new IntentFilter();
@@ -83,8 +89,9 @@ public class MainActivity extends AppCompatActivity {
             ex.printStackTrace();
         }
     }
-
+    //private class for our broadcast receiver
     private class MyBroadCastReceiver extends BroadcastReceiver {
+
         @Override
         public void onReceive(Context context, Intent intent) {
             try{
@@ -95,11 +102,6 @@ public class MainActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
         }
-    }
-    @Override
-    protected void onDestroy(){
-        super.onDestroy();
-        unregisterReceiver(broadCastReceiver);
     }
 }
 
