@@ -14,14 +14,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-//CO2 Emissions Equation/Pseudocode
-//Equation: (Miles driven during trip) * (miles per gallon of car) *
-//        (19.6 pounds of CO2 per gallon) = pounds of CO2 (note the pounds)
-//    - Can be converted to kilograms (possible user option?)
-//    - When you use the mpg as a variable, do 1/(mpg var) to match the above equation
-//example: I (theoretically) have a car that does 28 mpg. I drove 14 miles during my last trip
-//Equation: 14 miles * (1gallon/28miles) * (19.6 pounds of CO2 per gallon) = 9.8 pounds of CO2 emitted
-// CO2 emissions per gallon taken from https://www.eia.gov/environment/emissions/co2_vol_mass.php
 
 public class MainActivity extends AppCompatActivity {
     //identifier
@@ -104,8 +96,10 @@ public class MainActivity extends AppCompatActivity {
         public void onReceive(Context context, Intent intent) {
             try{
                 Log.d("Receiver", "Received data");
-                String data = intent.getStringExtra("data");
-                Log.d("Receiver", "Received data" + data);
+                int distance = intent.getIntExtra("distance", 0);
+                double poundsCO2 = intent.getDoubleExtra("pOfCO2", 0.0);
+                TextView out = findViewById(R.id.total_distance);
+                out.setText("Total distance " + distance + " km\n" + "Approx C02 emitted " + poundsCO2);
             }catch(Exception e){
                 e.printStackTrace();
             }

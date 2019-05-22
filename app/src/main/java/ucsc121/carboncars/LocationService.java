@@ -1,9 +1,7 @@
 package ucsc121.carboncars;
 
 import android.Manifest;
-import android.app.Activity;
 import android.app.Service;
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -15,8 +13,6 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.support.v4.app.ActivityCompat;
 import android.util.Log;
-import android.view.View;
-import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -42,6 +38,7 @@ public class LocationService extends Service {
     public void onDestroy() {
         super.onDestroy();
         Toast.makeText(getBaseContext(),total_distance + " km", Toast.LENGTH_LONG).show();
+        Log.d("on destroy", total_distance + " km");
         sendBroadcast();
         handler.removeCallbacks(rt);
         locationManager.removeUpdates(locListener);
@@ -65,14 +62,17 @@ public class LocationService extends Service {
         //https://stackoverflow.com/questions/9093271/start-sticky-and-start-not-sticky
         return START_STICKY;
     }
-
     //function to send data to an activity
     private void sendBroadcast(){
         try{
+            double CO2_pounds;
             Intent broadCastIntent = new Intent();
+            CO2_pounds = CalculatePoundsCO2(total_distance, 28.0 );
             broadCastIntent.setAction(MainActivity.BROADCAST_ACTION);
-            broadCastIntent.putExtra("data", "test");
+            broadCastIntent.putExtra("pOfCO2",CO2_pounds);
+            broadCastIntent.putExtra("distance", total_distance);
             sendBroadcast(broadCastIntent);
+            Log.d("broadcast", "sent");
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -172,5 +172,22 @@ public class LocationService extends Service {
                         Math.sin(dLon/2) * Math.sin(dLon/2);
         double c = 2 * Math.asin(Math.sqrt(a));
         return radius * c;
+    }
+
+    //CO2 Emissions Equation/Pseudocode
+//Equation: (Miles driven during trip) * (miles per gallon of car) *
+//        (19.6 pounds of CO2 per gallon) = pounds of CO2 (note the pounds)
+//    - Can be converted to kilograms (possible user option?)
+//    - When you use the mpg as a variable, do 1/(mpg var) to match the above equation
+//example: I (theoretically) have a car that does 28 mpg. I drove 14 miles during my last trip
+//Equation: 14 miles * (1gallon/28miles) * (19.6 pounds of CO2 per gallon) = 9.8 pounds of CO2 emitted
+// CO2 emissions per gallon taken from https://www.eia.gov/environment/emissions/co2_vol_mass.php
+
+    private double CalculatePoundsCO2(double distance, double mpg){
+        double emissions_pounds, distance_miles;
+        //km to miles
+        distance_miles = distance * 0.62137;
+        emissions_pounds = distance_miles * mpg * 19.6;
+        return emissions_pounds;
     }
 }
