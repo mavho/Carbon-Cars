@@ -53,11 +53,11 @@ public class LocationService extends Service {
             public void run() {
                 //Log.v("Debug", "starting up thread");
                 location();
-                //delay in milli, when in the background or something we need to delaty this
+                //delay in milli, when in the background or something we need to delay this
                 handler.postDelayed(this, 5000);
             }
         };
-        //delay in milli, when in the background or something we need to delaty this
+        //delay in milli, when in the background or something we need to delay this
         handler.postDelayed(rt, 5000);
         //https://stackoverflow.com/questions/9093271/start-sticky-and-start-not-sticky
         return START_STICKY;
@@ -67,7 +67,7 @@ public class LocationService extends Service {
         try{
             double CO2_pounds;
             Intent broadCastIntent = new Intent();
-            CO2_pounds = CalculatePoundsCO2(total_distance, 28.0 );
+            CO2_pounds = CalculatePoundsCO2(total_distance, 1.0/28.0 );
             broadCastIntent.setAction(MainActivity.BROADCAST_ACTION);
             broadCastIntent.putExtra("pOfCO2",CO2_pounds);
             broadCastIntent.putExtra("distance", total_distance);
@@ -101,6 +101,8 @@ public class LocationService extends Service {
             }else{
                 locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locListener);
             }
+        }else{
+            Toast.makeText(getBaseContext(), "Location not enabled!", Toast.LENGTH_LONG).show();
         }
         if (network_enabled) {
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
@@ -111,6 +113,8 @@ public class LocationService extends Service {
             }else{
                 locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locListener);
             }
+        }else{
+            Toast.makeText(getBaseContext(), "Location not enabled!", Toast.LENGTH_LONG).show();
         }
         Log.v("Debug", "in on create..3");
     }
@@ -123,7 +127,7 @@ public class LocationService extends Service {
         double lon_new;
         double time = 10.00;
         double speed = 0.0;
-        int count = 0;
+        boolean first = true;
 
         @Override
         public void onLocationChanged(Location location) {
@@ -135,9 +139,9 @@ public class LocationService extends Service {
                 String longitude = "Longitude: " +location.getLongitude();
                 String latitude = "Latitude: " +location.getLatitude();
                 double distance;
-                if (count == 0){
+                if (first){
                     distance = CalculationByDistance(lat_new, lon_new, lat_new, lon_new);
-                    count++;
+                    first = false;
                 }else{
                     distance = CalculationByDistance(lat_new, lon_new, lat_old, lon_old);
                 }
