@@ -14,7 +14,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".MonthlyActivity"></activity>
+        <activity android:name=".CarInputActivity"></activity>
+        <activity android:name=".MonthlyActivity" />
         <activity android:name=".WeeklyActivity" />
 
         <service
@@ -23,8 +24,7 @@
             android:exported="true" />
 
         <activity android:name=".DatavizActivity" />
-        <activity android:name=".tripHistory"></activity>
-
+        <activity android:name=".tripHistory" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
