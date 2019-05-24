@@ -22,11 +22,15 @@ public class MainActivity extends AppCompatActivity {
     /*******So I can receive data from service from activities******/
     public static String BROADCAST_ACTION = "ucsc121.carboncars";
     MyBroadCastReceiver broadCastReceiver;
+
+    //reference to the database.
+    DataBase carboncars_db;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        carboncars_db = new DataBase(this, "CARBON_DB", null, 1);
         Button dataVizButton = findViewById(R.id.dataVizButton);
         Button historyButton = findViewById(R.id.historybutton);
         //history button
@@ -90,6 +94,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
     //private class for our broadcast receiver
+    //receives when the data is stopped
     private class MyBroadCastReceiver extends BroadcastReceiver {
 
         @Override
@@ -100,6 +105,7 @@ public class MainActivity extends AppCompatActivity {
                 double poundsCO2 = intent.getDoubleExtra("pOfCO2", 0.0);
                 TextView out = findViewById(R.id.total_distance);
                 out.setText("Total distance " + distance + " km\n" + "Approx C02 emitted " + poundsCO2);
+                carboncars_db.insertTripData(distance, poundsCO2, "trip", "some date");
             }catch(Exception e){
                 e.printStackTrace();
             }
