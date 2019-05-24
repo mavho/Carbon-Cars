@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".CarInputActivity">
+
+    <TextView
+        android:id="@+id/formTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Please input your personal vehicle information"
+        tools:layout_editor_absoluteX="35dp"
+        tools:layout_editor_absoluteY="48dp" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Submit Vehicle Info"
+        tools:layout_editor_absoluteX="120dp"
+        tools:layout_editor_absoluteY="586dp" />
+
+    <TextView
+        android:id="@+id/vehicleNameTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Vehicle name"
+        tools:layout_editor_absoluteX="35dp"
+        tools:layout_editor_absoluteY="109dp" />
+
+    <TextView
+        android:id="@+id/vehicleMPGTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Vehicle MPG"
+        tools:layout_editor_absoluteX="35dp"
+        tools:layout_editor_absoluteY="419dp" />
+
+    <TextView
+        android:id="@+id/textView9"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Vehicle Type"
+        tools:layout_editor_absoluteX="34dp"
+        tools:layout_editor_absoluteY="239dp" />
+
+    <EditText
+        android:id="@+id/editText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Name"
+        tools:layout_editor_absoluteX="35dp"
+        tools:layout_editor_absoluteY="158dp" />
+
+    <RadioGroup
+        android:layout_width="319dp"
+        android:layout_height="36dp"
+        android:layout_above="@+id/view_below"
+        android:orientation="horizontal"
+        tools:layout_editor_absoluteX="34dp"
+        tools:layout_editor_absoluteY="347dp">
+
+        <RadioButton
+            android:id="@+id/radioButton2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Passenger Car" />
+
+        <RadioButton
+            android:id="@+id/radioButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Light-Duty Truck" />
+    </RadioGroup>
+
+    <TextView
+        android:id="@+id/textView10"
+        android:layout_width="350dp"
+        android:layout_height="41dp"
+        android:text="Light-Trucks include most pick-up trucks and SUVs, while Passenger Cars include sedans, muscle cars, etc."
+        tools:layout_editor_absoluteX="35dp"
+        tools:layout_editor_absoluteY="268dp" />
+
+    <EditText
+        android:id="@+id/editText2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Name"
+        tools:layout_editor_absoluteX="34dp"
+        tools:layout_editor_absoluteY="471dp" />
+</android.support.constraint.ConstraintLayout>
