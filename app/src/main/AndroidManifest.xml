@@ -14,9 +14,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".CarsListActivity"></activity>
+        <activity android:name=".YearlyActivity"></activity>
         <activity android:name=".CarInputActivity" />
-        <activity android:name=".MonthlyActivity" />
         <activity android:name=".WeeklyActivity" />
 
         <service
