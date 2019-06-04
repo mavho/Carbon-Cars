@@ -75,7 +75,7 @@ public class DataBase extends SQLiteOpenHelper {
         String query = "Select * from " + TRIP_TABLE_NAME + " where " + TRIP + " = '" + trip_name + "'";
         Cursor cursor = sqldb.rawQuery(query, null);
 
-        if (cursor.getCount() <= 0){
+        if (cursor == null){
             cursor.close();
             Log.d("db", "error");
             return false;
