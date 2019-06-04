@@ -37,7 +37,7 @@ public class LocationService extends Service {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        Toast.makeText(getBaseContext(),total_distance + " km", Toast.LENGTH_LONG).show();
+//        Toast.makeText(getBaseContext(),total_distance + " km", Toast.LENGTH_LONG).show();
         Log.d("on destroy", total_distance + " km");
         sendBroadcast();
         handler.removeCallbacks(rt);
@@ -48,7 +48,7 @@ public class LocationService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         this.intent = intent;
-        Toast.makeText(getBaseContext(), "Service Started", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(getBaseContext(), "Service Started", Toast.LENGTH_SHORT).show();
         //thread to run the code
         rt = new Runnable() {
             public void run() {

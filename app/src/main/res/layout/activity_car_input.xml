@@ -38,8 +38,8 @@
 
     <TextView
         android:id="@+id/vehicleNameTitle"
-        android:layout_width="489dp"
-        android:layout_height="29dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:text="Vehicle name"
         android:textAlignment="viewStart"
         android:textAllCaps="true"
@@ -64,9 +64,8 @@
 
     <TextView
         android:id="@+id/textView9"
-        android:layout_width="388dp"
-        android:layout_height="35dp"
-        android:layout_marginStart="4dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:text="Vehicle Type"
         android:textAlignment="viewStart"
         android:textSize="20sp"
@@ -77,9 +76,8 @@
 
     <EditText
         android:id="@+id/editText"
-        android:layout_width="355dp"
-        android:layout_height="53dp"
-        android:layout_marginStart="28dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:backgroundTint="#6F8F72"
         android:drawableTint="#4CAF50"
         android:ems="10"

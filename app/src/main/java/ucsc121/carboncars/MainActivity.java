@@ -46,6 +46,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         carboncars_db = new DataBase(this, "CARBON_DB", null, 2);
+
+        carboncars_db.insertTripData(30.0, "Subaru Outback", 45.2, "Idaho","")
         //listener for start button
         Button startButton = findViewById(R.id.location_service_but);
         startButton.setOnClickListener(new View.OnClickListener(){
