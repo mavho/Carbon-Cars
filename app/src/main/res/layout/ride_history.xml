@@ -13,5 +13,29 @@
         android:textColor="@color/colorPrimaryDark"
 
         android:textSize="20dp"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/dateID"
+        android:text="rideID"
+        android:textColor="@color/colorPrimaryDark"
+
+        android:textSize="20dp"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/distanceID"
+        android:text="rideID"
+        android:textColor="@color/colorPrimaryDark"
+
+        android:textSize="20dp"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/co2ID"
+        android:text="rideID"
+        android:textColor="@color/colorPrimaryDark"
+
+        android:textSize="20dp"/>
 
 </LinearLayout>

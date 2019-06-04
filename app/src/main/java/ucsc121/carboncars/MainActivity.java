@@ -88,6 +88,8 @@ public class MainActivity extends AppCompatActivity {
             registerReceiver();
             Log.d("debug", "Service Started");
         }
+
+//        carboncars_db.insertTripData(123.0, 32.00,"main", "123123");
     }
 
     public void stopService(View view){

@@ -42,7 +42,11 @@ public class HistoryAdapter extends RecyclerView.Adapter<tripViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull tripViewHolder holder, int i) {
         Log.d(TAG, "onBindViewHolder: called.");
-        holder.rideId.setText(itemList.get(i).getRideID());
+        holder.rideID.setText(itemList.get(i).getRideID());
+        holder.dateID.setText(itemList.get(i).getDateID());
+        holder.distanceID.setText(itemList.get(i).getDistanceID());
+        holder.co2ID.setText(itemList.get(i).getCo2ID());
+
 
 
     }

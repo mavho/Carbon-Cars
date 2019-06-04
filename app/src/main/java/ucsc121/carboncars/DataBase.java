@@ -126,9 +126,16 @@ public class DataBase extends SQLiteOpenHelper {
         sqldb.execSQL(query);
     }
 
-    public void clearCarsDB(){
+    public void clearCarsDB() {
         sqldb = getWritableDatabase();
         String query = "DELETE FROM " + CAR_TABLE_NAME;
         sqldb.execSQL(query);
+    }
+
+    public Cursor getAllTrips(){
+        sqldb = this.getWritableDatabase();
+        String selectAll = "SELECT * FROM " + TRIP_TABLE_NAME;
+        Cursor tripData = sqldb.rawQuery(selectAll,null);
+        return tripData;
     }
 }
