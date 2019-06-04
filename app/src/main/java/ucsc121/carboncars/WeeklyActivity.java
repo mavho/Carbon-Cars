@@ -21,7 +21,6 @@ import com.anychart.graphics.vector.Stroke;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-import java.util.Random;
 
 public class WeeklyActivity extends AppCompatActivity {
 
@@ -33,7 +32,7 @@ public class WeeklyActivity extends AppCompatActivity {
         setContentView(R.layout.activity_weekly);
 
         AnyChartView anyChartView = findViewById(R.id.any_chart_view);
-        anyChartView.setProgressBar(findViewById(R.id.progress_bar));
+        anyChartView.setProgressBar(findViewById(R.id.progressBar));
 
         Cartesian cartesian = AnyChart.line();
 

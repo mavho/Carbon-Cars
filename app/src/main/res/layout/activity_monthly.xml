@@ -8,18 +8,16 @@
 
     <com.anychart.AnyChartView
         android:id="@+id/any_chart_view"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        />
 
     <ProgressBar
-        android:id="@+id/ProgressBar01"
-        android:layout_width="99dp"
-        android:layout_height="101dp"
-        android:indeterminateDrawable="@drawable/progress"
+        android:id="@+id/progress_bar1"
+        android:layout_width="104dp"
+        android:layout_height="109dp"
+        android:background="#001CD63B"
+        android:theme="@style/GreenAccent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
