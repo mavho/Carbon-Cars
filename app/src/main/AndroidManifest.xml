@@ -15,7 +15,7 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
 
-        <activity android:name=".YearlyActivity"
+        <activity android:name=".MonthlyActivity"
             android:screenOrientation="portrait"
             >
         </activity>

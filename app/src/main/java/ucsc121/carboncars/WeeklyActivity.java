@@ -3,6 +3,7 @@ package ucsc121.carboncars;
 import android.database.Cursor;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.anychart.AnyChart;
 import com.anychart.AnyChartView;
@@ -53,31 +54,71 @@ public class WeeklyActivity extends AppCompatActivity {
         cartesian.xAxis(0).labels().padding(2d, 0d, 2d, 0d);
 
         carbonDB = new DataBase(this, "CARBON_DB", null, 2);
-        Cursor trips = carbonDB.getAllTrips();
 
         List<DataEntry> seriesData = new ArrayList<>();
 
-        int cursorTracker = 0;
-        while(trips.moveToNext()){
-            if(cursorTracker > 7) break;
+//        boolean first = true;
+//        int cursorCounter = 0;
+//        int lastMonth = -1;
+//        String savedDay = "";
+//        Double lastCO2 = 0.0;
+////        String lastDate = "";
+//        Boolean setLastDate = false;
+//
+//        Calendar lastDate = Calendar.getInstance();
+//        Calendar newEntryDate = Calendar.getInstance();
 
-            String date = trips.getString(2);
-            Double co2 = trips.getDouble(4);
-            String day = getDay(date);
+        int numEntries = 0;
 
-            seriesData.add(new CustomDataEntry(day, co2));
-
-            cursorTracker++;
+        Cursor size = carbonDB.getAllTrips();
+        if(size.moveToFirst()){
+            do{
+                numEntries++;
+            }while(size.moveToNext());
         }
-        trips.close();
 
-        seriesData.add(new CustomDataEntry("Mon", 3.6));
-        seriesData.add(new CustomDataEntry("Tue", 5.6));
-        seriesData.add(new CustomDataEntry("Wed", 8.6));
-        seriesData.add(new CustomDataEntry("Thu", 10.6));
-        seriesData.add(new CustomDataEntry("Fri", 4.6));
-        seriesData.add(new CustomDataEntry("Sat", 1.6));
-        seriesData.add(new CustomDataEntry("Sun", 2.6));
+        Log.d("monthly", "numEntries: " + numEntries);
+
+        int nextCount = 0;
+
+        size.close();
+
+        Cursor trips = carbonDB.getAllTrips();
+//        trips.moveToNext();
+
+
+        int count = 0;
+        if(trips.moveToFirst()){
+            do{
+
+                if(count == 7) break;
+                Log.d("MonthlyActivity", "Entered main loop " + nextCount );
+                String date = trips.getString(2); // get date
+                Log.d("MonthlyActivity", "Date: + " + date);
+
+                Double co2 = trips.getDouble(4); // get co2
+
+                String nums[] = date.split("/");
+                if (nums[1].charAt(0) == '0')
+                    nums[1] = nums[1].substring(1); // check if theres a 0 in day string
+                if (nums[0].charAt(0) == '0')
+                    nums[0] = nums[0].substring(1); // check if theres a 0 in month string
+
+                String finalDate = nums[0] + "/" + nums[1];
+
+//                String day = getDay(date);
+                seriesData.add(new CustomDataEntry(finalDate, co2));
+                count++;
+            }while(trips.moveToNext());
+        }
+
+//        seriesData.add(new CustomDataEntry("Mon", 3.6));
+//        seriesData.add(new CustomDataEntry("Tue", 5.6));
+//        seriesData.add(new CustomDataEntry("Wed", 8.6));
+//        seriesData.add(new CustomDataEntry("Thu", 10.6));
+//        seriesData.add(new CustomDataEntry("Fri", 4.6));
+//        seriesData.add(new CustomDataEntry("Sat", 1.6));
+//        seriesData.add(new CustomDataEntry("Sun", 2.6));
 
         Set set = Set.instantiate();
         set.data(seriesData);
