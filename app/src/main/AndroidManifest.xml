@@ -24,7 +24,7 @@
             android:exported="true" />
 
         <activity android:name=".DatavizActivity" />
-        <activity android:name=".tripHistory" />
+        <activity android:name=".tripHistory" android:label="Trip History" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
