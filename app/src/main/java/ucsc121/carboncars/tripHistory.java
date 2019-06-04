@@ -39,10 +39,6 @@ public class tripHistory extends AppCompatActivity {
         pastTrip = findViewById(R.id.history);
 
         carbondb = new DataBase(this, "CARBON_DB", null, 2);
-        carbondb.insertTripData(123.0, "Toyota",34.3, "Trip2","01/27/19");
-        carbondb.insertTripData(345.0, "Mazda",56.3, "Test2","01/28/19");
-        carbondb.insertTripData(9823.0, "Honda",51.3, "Test4","01/24/19");
-
         Cursor trips = carbondb.getAllTrips();
         DecimalFormat df = new DecimalFormat("#.###");
         while(trips.moveToNext()){

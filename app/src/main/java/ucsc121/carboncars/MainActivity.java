@@ -22,6 +22,11 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
 
 public class MainActivity extends AppCompatActivity {
     boolean start = true;
@@ -41,9 +46,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         carboncars_db = new DataBase(this, "CARBON_DB", null, 2);
-        Button dataVizButton = findViewById(R.id.dataVizButton);
-        Button historyButton = findViewById(R.id.historybutton);
-        //history button
         //listener for start button
         Button startButton = findViewById(R.id.location_service_but);
         startButton.setOnClickListener(new View.OnClickListener(){
@@ -51,10 +53,12 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v){
                 if (start){
                     startButton.setBackground(getDrawable(R.drawable.round_rbutt));
+                    startButton.setText("STOP LOCATION TRACKER");
                     startService(v);
                     start = false;
                 }else{
                     startButton.setBackground(getDrawable(R.drawable.round_butt));
+                    startButton.setText("START LOCATION TRACKER");
                     stopService(v);
                     start = true;
                 }
@@ -168,12 +172,20 @@ public class MainActivity extends AppCompatActivity {
                 double poundsCO2 = intent.getDoubleExtra("pOfCO2", 0.0);
                 TextView out = findViewById(R.id.total_distance);
                 out.setText("Total distance " + distance + " km\n" + "Approx C02 emitted " + poundsCO2);
-
-                carboncars_db.insertTripData(distance,carname, poundsCO2, tripname, "some date");
+                String date = getCurrentDate();
+                carboncars_db.insertTripData(distance,carname, poundsCO2, tripname, date);
             }catch(Exception e){
                 e.printStackTrace();
             }
         }
+    }
+    //get the date, convert to dd/mm/yyyy
+    private String getCurrentDate() {
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+        Date c = Calendar.getInstance().getTime();
+        System.out.println("Current time => " + c);
+        String formattedDate = format.format(c);
+        return formattedDate;
     }
 }
 
