@@ -25,7 +25,11 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="112dp"
         android:layout_marginEnd="112dp"
+        android:background="#6F8F72"
+        android:backgroundTint="#8FD694"
+        android:hapticFeedbackEnabled="false"
         android:onClick="submitForm"
+        android:shadowColor="#8FD694"
         android:text="Submit Vehicle Info"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -74,10 +78,14 @@
         android:id="@+id/editText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:backgroundTint="#6F8F72"
+        android:drawableTint="#4CAF50"
         android:ems="10"
+        android:foregroundTint="#4CAF50"
         android:hint="Name"
         android:inputType="textPersonName"
         android:textAlignment="viewStart"
+        android:textCursorDrawable="@color/carboncolor"
         app:layout_constraintBottom_toTopOf="@+id/textView9"
         app:layout_constraintStart_toStartOf="@+id/textView9"
         app:layout_constraintTop_toBottomOf="@+id/vehicleNameTitle" />
@@ -96,6 +104,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:buttonTint="#77AD78"
             android:text="Passenger Car" />
 
         <RadioButton
@@ -104,7 +113,6 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:buttonTint="#77AD78"
-            android:buttonTintMode="add"
             android:text="Light-Duty Truck" />
     </RadioGroup>
 
@@ -125,9 +133,13 @@
         android:id="@+id/MPG_txt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:backgroundTint="#6F8F72"
         android:ems="10"
         android:hint="15.0"
         android:inputType="textPersonName"
+        android:textColorHighlight="#77AD78"
+        android:textColorLink="#77AD78"
+        android:textCursorDrawable="@color/carboncolor"
         app:layout_constraintBottom_toTopOf="@+id/button"
         app:layout_constraintStart_toStartOf="@+id/button"
         app:layout_constraintTop_toBottomOf="@+id/vehicleMPGTitle" />
