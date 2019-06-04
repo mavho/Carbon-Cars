@@ -44,7 +44,8 @@ public class DataBase extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         //car db
         sqLiteDatabase.execSQL("CREATE TABLE " + CAR_TABLE_NAME +
-            " (" + CAR_MODEL + " TEXT PRIMARY KEY, " + CAR_TYPE + " TEXT, " + MPG + " REAL" + ")");
+
+            " (" + CAR_MODEL + " TEXT PRIMARY KEY, " + CAR_TYPE + " TEXT, " + MPG + " REAL " +")");
         //trip db
         //we include CARMODEL so we know which car they used, and we can pull info from that
         sqLiteDatabase.execSQL("CREATE TABLE " + TRIP_TABLE_NAME +
@@ -76,14 +77,14 @@ public class DataBase extends SQLiteOpenHelper {
 
         String query = "Select * from " + TRIP_TABLE_NAME + " where " + TRIP + " = '" + trip_name + "'";
         Cursor cursor = sqldb.rawQuery(query, null);
-
-        if (cursor == null){
-            cursor.close();
-            Log.d("db", "error");
-            return false;
-        }else{
+        if (cursor != null){
             Log.d("db", "adding trip info");
             sqldb.insert(TRIP_TABLE_NAME, null, cv);
+        }else{
+            cursor.close();
+            Log.d("db", "error");
+            sqldb.close();
+            return false;
         }
         sqldb.close();
         Log.d("db", "adding trip info");
@@ -139,5 +140,15 @@ public class DataBase extends SQLiteOpenHelper {
         String selectAll = "SELECT * FROM " + TRIP_TABLE_NAME;
         Cursor tripData = sqldb.rawQuery(selectAll,null);
         return tripData;
+    }
+
+    public Cursor find(String carname) {
+        sqldb = getWritableDatabase();
+
+        String query = "Select * from " + CAR_TABLE_NAME + " where " + CAR_MODEL + " = '" + carname + "'";
+        //determine if key is already in there
+        Cursor cursor = sqldb.rawQuery(query, null);
+
+        return cursor;
     }
 }

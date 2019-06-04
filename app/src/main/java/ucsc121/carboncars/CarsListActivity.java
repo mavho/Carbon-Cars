@@ -1,27 +1,22 @@
 package ucsc121.carboncars;
 
-import android.app.LauncherActivity;
-import android.app.ListActivity;
+import android.content.Intent;
 import android.database.Cursor;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.RadioButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.zip.Inflater;
 
-public class CarsListActivity extends AppCompatActivity{
+public class CarsListActivity extends AppCompatActivity implements CustAdapter.OnCarSelectedListener{
 
     DataBase carboncars_db;
     ListView layout;
+    TextView trip_name;
+    Intent result;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,7 +27,6 @@ public class CarsListActivity extends AppCompatActivity{
     }//view all
 
     public void view_All(){
-
         //View view = getLayoutInflater().inflate(R.layout.activity_cars_list, null);
         Cursor cars = carboncars_db.getCars();
         ArrayList <String> names = new ArrayList<>();
@@ -50,4 +44,25 @@ public class CarsListActivity extends AppCompatActivity{
         }
 
     }
+
+    @Override
+    public void onCarSelected(String carID) {
+        //get carid
+        result = new Intent();
+        result.putExtra("carname", carID);
+        //get tripname
+        trip_name = findViewById(R.id.trip_name);
+        String tripname = trip_name.getText().toString();
+
+        if(tripname.equals("")){
+            Toast.makeText(this, "Please insert a trip name",Toast.LENGTH_SHORT);
+            //use just needs to try again
+        }else{
+            result.putExtra("tripname",tripname);
+            //set the result to this
+            setResult(1, result);
+            finish();
+        }
+    }
+
 }
