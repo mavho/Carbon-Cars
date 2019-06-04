@@ -26,7 +26,6 @@ public class tripHistory extends AppCompatActivity {
 
 
 
-
     private ArrayList<tripDetailObject> getData() {
         return resultsHistory;
     }
