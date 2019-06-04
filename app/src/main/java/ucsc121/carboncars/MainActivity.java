@@ -20,6 +20,7 @@ import android.widget.TextView;
 
 
 public class MainActivity extends AppCompatActivity {
+    boolean start = true;
     String tripname;
     String carname;
     //identifier
@@ -38,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        carboncars_db = new DataBase(this, "CARBON_DB", null, 1);
+        carboncars_db = new DataBase(this, "CARBON_DB", null, 2);
         Button dataVizButton = findViewById(R.id.dataVizButton);
         Button historyButton = findViewById(R.id.historybutton);
         //history button
@@ -55,6 +56,20 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent dataVizActivityIntent = new Intent(getApplicationContext(), DatavizActivity.class);
                 startActivity(dataVizActivityIntent);
+            }
+        });
+        //listener for start button
+        Button startButton = findViewById(R.id.location_service_but);
+        startButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                if (start){
+                    startService(v);
+                    start = false;
+                }else{
+                    stopService(v);
+                    start = true;
+                }
             }
         });
     }

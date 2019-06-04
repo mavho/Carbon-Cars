@@ -8,61 +8,91 @@
 
     <TextView
         android:id="@+id/formTitle"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Please input your personal vehicle information"
+        android:layout_marginEnd="8dp"
+        android:text="Please Input Your Personal Vehicle Information"
+        android:textAlignment="center"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/vehicleNameTitle" />
 
     <Button
         android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Submit Vehicle Info"
+        android:layout_marginStart="112dp"
+        android:layout_marginEnd="112dp"
+        android:background="#6F8F72"
+        android:backgroundTint="#8FD694"
+        android:hapticFeedbackEnabled="false"
         android:onClick="submitForm"
+        android:shadowColor="#8FD694"
+        android:text="Submit Vehicle Info"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/MPG_txt" />
 
     <TextView
         android:id="@+id/vehicleNameTitle"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Vehicle name"
+        android:textAlignment="viewStart"
+        android:textAllCaps="true"
+        android:textSize="20sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/editText"
         app:layout_constraintStart_toStartOf="@+id/editText"
-        app:layout_constraintTop_toBottomOf="@+id/formTitle" />
+        app:layout_constraintTop_toBottomOf="@+id/formTitle"
+        app:layout_constraintVertical_bias="0.51" />
 
     <TextView
         android:id="@+id/vehicleMPGTitle"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Vehicle MPG"
+        android:text="Enter Vehicle MPG"
+        android:textAllCaps="true"
+        android:textSize="18sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/MPG_txt"
         app:layout_constraintStart_toStartOf="@+id/MPG_txt"
         app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
 
     <TextView
         android:id="@+id/textView9"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Vehicle Type"
+        android:textAlignment="viewStart"
+        android:textSize="20sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/MPGtextView10"
         app:layout_constraintStart_toStartOf="@+id/MPGtextView10"
         app:layout_constraintTop_toBottomOf="@+id/editText" />
 
     <EditText
         android:id="@+id/editText"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:backgroundTint="#6F8F72"
+        android:drawableTint="#4CAF50"
         android:ems="10"
-        android:inputType="textPersonName"
+        android:foregroundTint="#4CAF50"
         android:hint="Name"
+        android:inputType="textPersonName"
+        android:textAlignment="viewStart"
+        android:textCursorDrawable="@color/carboncolor"
         app:layout_constraintBottom_toTopOf="@+id/textView9"
         app:layout_constraintStart_toStartOf="@+id/textView9"
         app:layout_constraintTop_toBottomOf="@+id/vehicleNameTitle" />
 
     <RadioGroup
         android:id="@+id/radioGroup"
-        android:layout_width="319dp"
+        android:layout_width="match_parent"
         android:layout_height="36dp"
         android:orientation="horizontal"
         app:layout_constraintBottom_toTopOf="@+id/vehicleMPGTitle"
@@ -74,6 +104,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:buttonTint="#77AD78"
             android:text="Passenger Car" />
 
         <RadioButton
@@ -81,26 +112,34 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:buttonTint="#77AD78"
             android:text="Light-Duty Truck" />
     </RadioGroup>
 
     <TextView
         android:id="@+id/MPGtextView10"
-        android:layout_width="354dp"
+        android:layout_width="match_parent"
         android:layout_height="49dp"
         android:layout_marginStart="4dp"
+        android:fontFamily="sans-serif"
         android:text="Light-Trucks include most pick-up trucks and SUVs, while Passenger Cars include sedans, muscle cars, etc."
+        android:textSize="16sp"
+        android:typeface="serif"
         app:layout_constraintBottom_toTopOf="@+id/radioGroup"
         app:layout_constraintStart_toStartOf="@+id/radioGroup"
         app:layout_constraintTop_toBottomOf="@+id/textView9" />
 
     <EditText
         android:id="@+id/MPG_txt"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:backgroundTint="#6F8F72"
         android:ems="10"
+        android:hint="15.0"
         android:inputType="textPersonName"
-        android:hint="15"
+        android:textColorHighlight="#77AD78"
+        android:textColorLink="#77AD78"
+        android:textCursorDrawable="@color/carboncolor"
         app:layout_constraintBottom_toTopOf="@+id/button"
         app:layout_constraintStart_toStartOf="@+id/button"
         app:layout_constraintTop_toBottomOf="@+id/vehicleMPGTitle" />

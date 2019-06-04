@@ -20,7 +20,7 @@ public class CarsListActivity extends AppCompatActivity implements CustAdapter.O
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        carboncars_db = new DataBase(this, "CARBON_DB", null, 1);
+        carboncars_db = new DataBase(this, "CARBON_DB", null, 2);
         setContentView(R.layout.activity_cars_list);
         layout = (ListView) findViewById(R.id.car_list);
         view_All();

@@ -14,24 +14,16 @@
 
     <Button
         android:id="@+id/location_service_but"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:onClick="startService"
+        android:gravity="center_vertical|center_horizontal"
+        android:background="@drawable/round_butt"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
         android:text="Start Location tracker"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/stop_location_serv_but"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:onClick="stopService"
-        android:text="Stop Location Tracker"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/location_service_but" />
 
     <Button
         android:id="@+id/total_distance"
@@ -39,7 +31,7 @@
         android:layout_height="wrap_content"
         android:hint="in km"
         android:textAlignment="center"
-        app:layout_constraintTop_toBottomOf="@+id/stop_location_serv_but" />
+        app:layout_constraintTop_toBottomOf="@+id/location_service_but" />
 
     <Button
         android:id="@+id/dataVizButton"
@@ -81,7 +73,7 @@
         android:onClick="goto_carInput"
         android:text="Input Cars"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/stop_location_serv_but"
+        app:layout_constraintEnd_toEndOf="@+id/location_service_but"
         app:layout_constraintHorizontal_bias="0.511"
         app:layout_constraintStart_toStartOf="@+id/location_service_but"
         app:layout_constraintTop_toTopOf="parent"

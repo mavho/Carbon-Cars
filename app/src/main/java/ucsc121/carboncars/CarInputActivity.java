@@ -21,7 +21,7 @@ public class CarInputActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_car_input);
-        carboncars_db = new DataBase(this, "CARBON_DB", null, 1);
+        carboncars_db = new DataBase(this, "CARBON_DB", null, 2);
     }
 
     public void submitForm(View view){

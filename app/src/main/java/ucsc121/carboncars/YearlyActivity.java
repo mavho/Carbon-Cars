@@ -17,11 +17,17 @@ import com.anychart.enums.Anchor;
 import com.anychart.enums.MarkerType;
 import com.anychart.enums.TooltipPositionMode;
 import com.anychart.graphics.vector.Stroke;
+import android.database.Cursor;
 
 import java.util.ArrayList;
 import java.util.List;
 
+// AnyCharts code here based off code from the AnyCharts
+// sample code in https://github.com/AnyChart/AnyChart-Android
+
 public class YearlyActivity extends AppCompatActivity {
+
+    DataBase carbonDB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +54,17 @@ public class YearlyActivity extends AppCompatActivity {
 
         cartesian.yAxis(0).title("Pounds of CO2 Emitted");
         cartesian.xAxis(0).labels().padding(2d, 0d, 2d, 0d);
+
+        carbonDB = new DataBase(this, "CARBON_DB", null, 1);
+        Cursor trips = carbonDB.getAllTrips();
+
+
+        int cursorTracker = 0;
+        while(trips.moveToNext()){
+//            if(cursorTracker )
+            cursorTracker++;
+        }
+
 
         List<DataEntry> seriesData = new ArrayList<>();
         seriesData.add(new CustomDataEntry("Jan", 3.6));
