@@ -7,6 +7,9 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.ListFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -23,13 +26,15 @@ public class MainActivity extends AppCompatActivity {
     public static String BROADCAST_ACTION = "ucsc121.carboncars";
     MyBroadCastReceiver broadCastReceiver;
 
+    //for car list fragment
+    FragmentManager fragmentManager;
+
     //reference to the database.
     DataBase carboncars_db;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         carboncars_db = new DataBase(this, "CARBON_DB", null, 1);
         Button dataVizButton = findViewById(R.id.dataVizButton);
         Button historyButton = findViewById(R.id.historybutton);
@@ -56,9 +61,20 @@ public class MainActivity extends AppCompatActivity {
         super.onDestroy();
         unregisterReceiver(broadCastReceiver);
     }
+
+    public void goto_carInput(View view){
+        Intent intent = new Intent(this, CarInputActivity.class);
+        startActivity(intent);
+    }
+
     //right now if user allows the thing, they'll have to click the button again to go through the
     //if statement
     public void startService(View view){
+        Intent intent = new Intent(this, CarsListActivity.class);
+        startActivity(intent);
+
+
+       //start service once selected car
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED
                 && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
@@ -95,6 +111,7 @@ public class MainActivity extends AppCompatActivity {
             ex.printStackTrace();
         }
     }
+
     //private class for our broadcast receiver
     //receives when the data is stopped
     private class MyBroadCastReceiver extends BroadcastReceiver {
@@ -103,11 +120,11 @@ public class MainActivity extends AppCompatActivity {
         public void onReceive(Context context, Intent intent) {
             try{
                 Log.d("Receiver", "Received data");
-                int distance = intent.getIntExtra("distance", 0);
+                double distance = intent.getDoubleExtra("distance", 0);
                 double poundsCO2 = intent.getDoubleExtra("pOfCO2", 0.0);
                 TextView out = findViewById(R.id.total_distance);
                 out.setText("Total distance " + distance + " km\n" + "Approx C02 emitted " + poundsCO2);
-                carboncars_db.insertTripData(distance, poundsCO2, "trip", "some date");
+                carboncars_db.insertTripData(distance,"test", poundsCO2, "trip", "some date");
             }catch(Exception e){
                 e.printStackTrace();
             }
