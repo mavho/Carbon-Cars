@@ -55,18 +55,25 @@ public class YearlyActivity extends AppCompatActivity {
         cartesian.yAxis(0).title("Pounds of CO2 Emitted");
         cartesian.xAxis(0).labels().padding(2d, 0d, 2d, 0d);
 
-        carbonDB = new DataBase(this, "CARBON_DB", null, 1);
+        carbonDB = new DataBase(this, "CARBON_DB", null, 2);
         Cursor trips = carbonDB.getAllTrips();
 
+        List<DataEntry> seriesData = new ArrayList<>();
 
         int cursorTracker = 0;
         while(trips.moveToNext()){
-//            if(cursorTracker )
+            if(cursorTracker > 30) break;
+
+            String date = trips.getString(2);
+            Double co2 = trips.getDouble(4);
+            String month = getMonth(date);
+
+            seriesData.add(new CustomDataEntry(month, co2));
+
             cursorTracker++;
         }
+        trips.close();
 
-
-        List<DataEntry> seriesData = new ArrayList<>();
         seriesData.add(new CustomDataEntry("Jan", 3.6));
         seriesData.add(new CustomDataEntry("Feb", 5.6));
         seriesData.add(new CustomDataEntry("Mar", 8.6));
@@ -80,14 +87,13 @@ public class YearlyActivity extends AppCompatActivity {
         seriesData.add(new CustomDataEntry("Nov", 9.6));
         seriesData.add(new CustomDataEntry("Dec", 11.6));
 
-
         Set set = Set.instantiate();
         set.data(seriesData);
         Mapping series1Mapping = set.mapAs("{ x: 'x', value: 'value' }");
 
         Line series1 = cartesian.line(series1Mapping);
         series1.name("Month");
-        series1.stroke("{color: '#8fd694', thickness: 3, lineJoin: 'bevel', lineCap: 'round' }");
+        series1.stroke("{ color: '#8fd694', thickness: 3, lineJoin: 'bevel', lineCap: 'round' }");
         series1.hovered().markers().enabled(true);
         series1.hovered().markers()
                 .type(MarkerType.CIRCLE)
@@ -99,6 +105,53 @@ public class YearlyActivity extends AppCompatActivity {
                 .offsetY(5d);
 
         anyChartView.setChart(cartesian);
+    }
+
+    public String getMonth(String date){
+        String nums[] = date.split("/");
+        int month = Integer.parseInt(nums[0]);
+        String result = "";
+
+        switch(month){
+            case 1:
+                result = "Jan";
+                break;
+            case 2:
+                result = "Feb";
+                break;
+            case 3:
+                result = "Mar";
+                break;
+            case 4:
+                result = "Apr";
+                break;
+            case 5:
+                result = "May";
+                break;
+            case 6:
+                result = "Jun";
+                break;
+            case 7:
+                result = "Jul";
+                break;
+            case 8:
+                result = "Aug";
+                break;
+            case 9:
+                result = "Sep";
+                break;
+            case 10:
+                result = "Oct";
+                break;
+            case 11:
+                result = "Nov";
+                break;
+            case 12:
+                result = "Dec";
+                break;
+        }
+
+        return result;
     }
 
     private class CustomDataEntry extends ValueDataEntry {
