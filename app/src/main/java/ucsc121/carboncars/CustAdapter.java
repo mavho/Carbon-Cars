@@ -16,7 +16,7 @@ class CustAdapter implements ListAdapter {
     Context context;
 
     public interface OnCarSelectedListener {
-        void onCarSelected(int carID);
+        void onCarSelected(String carID);
     }
 
     // Reference to the activity
@@ -25,6 +25,7 @@ class CustAdapter implements ListAdapter {
     public CustAdapter(Context context, ArrayList<String> data) {
         this.car_name = data;
         this.context = context;
+        mListener = (OnCarSelectedListener)this.context;
     }
 
     @Override
@@ -72,8 +73,9 @@ class CustAdapter implements ListAdapter {
         @Override
         public void onClick(View view) {
             // Notify activity of band selection
-            String carId = (String) view.getTag();
-            mListener.onCarSelected(Integer.parseInt(carId));
+            RadioButton button = (RadioButton) view;
+            String result = button.getText().toString();
+            mListener.onCarSelected(result);
         }
     };
     @Override
