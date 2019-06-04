@@ -5,35 +5,46 @@
     android:orientation="vertical"
     android:padding="20dp"
     >
+
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:id="@+id/rideID"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:text="rideID"
         android:textColor="@color/colorPrimaryDark"
 
-        android:textSize="20dp"/>
+        android:textSize="20dp" />
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/dateID"
-        android:text="rideID"
+        android:text="dateID"
         android:textColor="@color/colorPrimaryDark"
 
         android:textSize="20dp"/>
+
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:id="@+id/distanceID"
-        android:text="rideID"
-        android:textColor="@color/colorPrimaryDark"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
 
-        android:textSize="20dp"/>
+        android:padding="0"
+        android:text="distanceID"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="20dp" />
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/co2ID"
-        android:text="rideID"
+        android:text="co2ID"
+        android:textColor="@color/colorPrimaryDark"
+
+        android:textSize="20dp"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/modelID"
+        android:text="modelID"
         android:textColor="@color/colorPrimaryDark"
 
         android:textSize="20dp"/>

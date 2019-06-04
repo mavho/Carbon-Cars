@@ -27,6 +27,7 @@ public class DataBase extends SQLiteOpenHelper {
 
     //table columns for TRIPS
     private static String TRIP = "TRIP";
+
     private static String DATE = "DATE";
     private static String DISTANCE = "DISTANCE";
     private static String CO2_FP = "C02";
@@ -43,11 +44,11 @@ public class DataBase extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         //car db
         sqLiteDatabase.execSQL("CREATE TABLE " + CAR_TABLE_NAME +
-            " (" + CAR_MODEL + " TEXT PRIMARY KEY, " + CAR_TYPE + " TEXT, " + MPG + " INTEGER" +")");
+            " (" + CAR_MODEL + " TEXT PRIMARY KEY, " + CAR_TYPE + " TEXT, " + MPG + " REAL" + ")");
         //trip db
         //we include CARMODEL so we know which car they used, and we can pull info from that
         sqLiteDatabase.execSQL("CREATE TABLE " + TRIP_TABLE_NAME +
-                " (" + TRIP + " TEXT PRIMARY KEY, " + CAR_MODEL + " TEXT," + DATE + " TEXT, "+ DISTANCE + " REAL, " +
+                " (" + TRIP + " TEXT PRIMARY KEY, " + CAR_MODEL + " TEXT, " + DATE + " TEXT, "+ DISTANCE + " REAL, " +
                 CO2_FP + " REAL " + ")");
     }
 
@@ -55,6 +56,7 @@ public class DataBase extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int oldVersion, int newVersion) {
         if(VERSION == newVersion){
             sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + CAR_TABLE_NAME + ";");
+            sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TRIP_TABLE_NAME + ";");
             VERSION = newVersion;
             onCreate(sqLiteDatabase);
             Toast.makeText(ctx, "TABLE IS UPGRADED", Toast.LENGTH_LONG).show();
@@ -133,7 +135,7 @@ public class DataBase extends SQLiteOpenHelper {
     }
 
     public Cursor getAllTrips(){
-        sqldb = this.getWritableDatabase();
+        sqldb = getWritableDatabase();
         String selectAll = "SELECT * FROM " + TRIP_TABLE_NAME;
         Cursor tripData = sqldb.rawQuery(selectAll,null);
         return tripData;
