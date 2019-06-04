@@ -53,7 +53,7 @@ public class MonthlyActivity extends AppCompatActivity {
 
         cartesian.tooltip().positionMode(TooltipPositionMode.POINT);
 
-        cartesian.title("Pounds of CO2 Emitted in the Past Year");
+        cartesian.title("Pounds of CO2 Emitted in the Past Month");
 
         cartesian.yAxis(0).title("Pounds of CO2 Emitted");
         cartesian.xAxis(0).labels().padding(2d, 0d, 2d, 0d);
