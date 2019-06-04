@@ -2,6 +2,7 @@ package ucsc121.carboncars;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
@@ -72,5 +73,14 @@ public class DataBase extends SQLiteOpenHelper {
         sqldb.insert(TRIP_TABLE_NAME, null, cv);
         sqldb.close();
         Log.d("db", "adding trip info");
+    }
+
+
+    public Cursor getAllTrips(){
+        sqldb = this.getWritableDatabase();
+        String selectAll = "SELECT * FROM " + TRIP_TABLE_NAME;
+        Cursor tripData = sqldb.rawQuery(selectAll,null);
+
+        return tripData;
     }
 }
