@@ -18,8 +18,8 @@ public class DatavizActivity extends AppCompatActivity {
         monthlyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent monthlyActivityIntent = new Intent(getApplicationContext(), MonthlyActivity.class);
-                startActivity(monthlyActivityIntent);
+                Intent yearlyActivityIntent = new Intent(getApplicationContext(), YearlyActivity.class);
+                startActivity(yearlyActivityIntent);
             }
         });
 

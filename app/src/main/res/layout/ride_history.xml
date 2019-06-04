@@ -5,37 +5,50 @@
     android:orientation="vertical"
     android:padding="20dp"
     >
+
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:id="@+id/rideID"
-        android:text="rideID"
-        android:textColor="@color/colorPrimaryDark"
-
-        android:textSize="20dp"/>
-    <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:text="rideID"
+        android:textColor="#000707"
+
+        android:textSize="30dp" />
+
+    <TextView
         android:id="@+id/dateID"
-        android:text="rideID"
-        android:textColor="@color/colorPrimaryDark"
-
-        android:textSize="20dp"/>
-    <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:text="dateID"
+        android:textColor="#6C6F6F"
+
+        android:textSize="20dp" />
+
+    <TextView
         android:id="@+id/distanceID"
-        android:text="rideID"
-        android:textColor="@color/colorPrimaryDark"
-
-        android:textSize="20dp"/>
-    <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/co2ID"
-        android:text="rideID"
-        android:textColor="@color/colorPrimaryDark"
 
-        android:textSize="20dp"/>
+        android:text="distanceID"
+        android:textColor="#6C6F6F"
+        android:textSize="20dp" />
+
+    <TextView
+        android:id="@+id/co2ID"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="co2ID"
+        android:textColor="#0C640F"
+
+        android:textSize="20dp" />
+
+    <TextView
+        android:id="@+id/modelID"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="modelID"
+        android:textColor="#6C6F6F"
+
+        android:textSize="20dp" />
 
 </LinearLayout>
