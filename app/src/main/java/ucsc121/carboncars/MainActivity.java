@@ -7,6 +7,8 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -14,9 +16,11 @@ import android.support.v4.app.ListFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -40,21 +44,6 @@ public class MainActivity extends AppCompatActivity {
         Button dataVizButton = findViewById(R.id.dataVizButton);
         Button historyButton = findViewById(R.id.historybutton);
         //history button
-        historyButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent historyIntent = new Intent(getApplicationContext(), tripHistory.class);
-                startActivity(historyIntent);
-            }
-        });
-        //dat viz button
-        dataVizButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent dataVizActivityIntent = new Intent(getApplicationContext(), DatavizActivity.class);
-                startActivity(dataVizActivityIntent);
-            }
-        });
         //listener for start button
         Button startButton = findViewById(R.id.location_service_but);
         startButton.setOnClickListener(new View.OnClickListener(){
@@ -71,6 +60,27 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+        BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.history_nav:
+                        Intent historyIntent = new Intent(getApplicationContext(), tripHistory.class);
+                        startActivity(historyIntent);
+                        break;
+                    case R.id.carinput_nav:
+                        Intent intent = new Intent(getApplicationContext(), CarInputActivity.class);
+                        startActivity(intent);
+                        break;
+                    case R.id.datViz_nav:
+                        Intent dataVizActivityIntent = new Intent(getApplicationContext(), DatavizActivity.class);
+                        startActivity(dataVizActivityIntent);
+                        break;
+                }
+                return true;
+            }
+        });
     }
 
     @Override
@@ -79,10 +89,6 @@ public class MainActivity extends AppCompatActivity {
         unregisterReceiver(broadCastReceiver);
     }
 
-    public void goto_carInput(View view){
-        Intent intent = new Intent(this, CarInputActivity.class);
-        startActivity(intent);
-    }
 
     //right now if user allows the thing, they'll have to click the button again to go through the
     //if statement

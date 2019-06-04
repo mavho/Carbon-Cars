@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/history_nav"
+        android:enabled="true"
+        android:icon="@drawable/history"
+        android:title="Trips"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/carinput_nav"
+        android:enabled="true"
+        android:icon="@drawable/car_trip"
+        android:title="Input Car"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/datViz_nav"
+        android:enabled="true"
+        android:icon="@drawable/vis"
+        android:title="Data Viz"
+        app:showAsAction="ifRoom" />
+</menu>
