@@ -7,6 +7,8 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -14,9 +16,16 @@ import android.support.v4.app.ListFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -30,9 +39,6 @@ public class MainActivity extends AppCompatActivity {
     public static String BROADCAST_ACTION = "ucsc121.carboncars";
     MyBroadCastReceiver broadCastReceiver;
 
-    //for car list fragment
-    FragmentManager fragmentManager;
-
     //reference to the database.
     DataBase carboncars_db;
     @Override
@@ -40,36 +46,43 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         carboncars_db = new DataBase(this, "CARBON_DB", null, 2);
-        Button dataVizButton = findViewById(R.id.dataVizButton);
-        Button historyButton = findViewById(R.id.historybutton);
-        //history button
-        historyButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent historyIntent = new Intent(getApplicationContext(), tripHistory.class);
-                startActivity(historyIntent);
-            }
-        });
-        //dat viz button
-        dataVizButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent dataVizActivityIntent = new Intent(getApplicationContext(), DatavizActivity.class);
-                startActivity(dataVizActivityIntent);
-            }
-        });
         //listener for start button
         Button startButton = findViewById(R.id.location_service_but);
         startButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
                 if (start){
+                    startButton.setBackground(getDrawable(R.drawable.round_rbutt));
+                    startButton.setText("STOP LOCATION TRACKER");
                     startService(v);
                     start = false;
                 }else{
+                    startButton.setBackground(getDrawable(R.drawable.round_butt));
+                    startButton.setText("START LOCATION TRACKER");
                     stopService(v);
                     start = true;
                 }
+            }
+        });
+        BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.history_nav:
+                        Intent historyIntent = new Intent(getApplicationContext(), tripHistory.class);
+                        startActivity(historyIntent);
+                        break;
+                    case R.id.carinput_nav:
+                        Intent intent = new Intent(getApplicationContext(), CarInputActivity.class);
+                        startActivity(intent);
+                        break;
+                    case R.id.datViz_nav:
+                        Intent dataVizActivityIntent = new Intent(getApplicationContext(), DatavizActivity.class);
+                        startActivity(dataVizActivityIntent);
+                        break;
+                }
+                return true;
             }
         });
     }
@@ -80,10 +93,6 @@ public class MainActivity extends AppCompatActivity {
         unregisterReceiver(broadCastReceiver);
     }
 
-    public void goto_carInput(View view){
-        Intent intent = new Intent(this, CarInputActivity.class);
-        startActivity(intent);
-    }
 
     //right now if user allows the thing, they'll have to click the button again to go through the
     //if statement
@@ -163,12 +172,20 @@ public class MainActivity extends AppCompatActivity {
                 double poundsCO2 = intent.getDoubleExtra("pOfCO2", 0.0);
                 TextView out = findViewById(R.id.total_distance);
                 out.setText("Total distance " + distance + " km\n" + "Approx C02 emitted " + poundsCO2);
-
-                carboncars_db.insertTripData(distance,carname, poundsCO2, tripname, "some date");
+                String date = getCurrentDate();
+                carboncars_db.insertTripData(distance,carname, poundsCO2, tripname, date);
             }catch(Exception e){
                 e.printStackTrace();
             }
         }
+    }
+    //get the date, convert to dd/mm/yyyy
+    private String getCurrentDate() {
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+        Date c = Calendar.getInstance().getTime();
+        System.out.println("Current time => " + c);
+        String formattedDate = format.format(c);
+        return formattedDate;
     }
 }
 

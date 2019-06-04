@@ -13,31 +13,28 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
 
-        android:layout_marginStart="29dp"
-        android:layout_marginEnd="153dp"
-        android:paddingLeft="10dp"
         android:text="rideID"
         android:textColor="#000707"
         android:textSize="25dp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toStartOf="@id/dateID"
-        app:layout_constraintStart_toStartOf="@id/distanceID"
-        tools:layout_editor_absoluteY="36dp" />
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="76dp" />
 
     <TextView
         android:id="@+id/dateID"
-        android:layout_width="100dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 
         android:layout_above="@id/rideID"
         android:layout_alignStart="@+id/co2ID"
 
-        android:layout_marginTop="26dp"
-        android:layout_marginEnd="20dp"
-        android:paddingTop="4dp"
+        android:layout_marginTop="60dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="8dp"
         android:text="dateID"
         android:textColor="#6C6F6F"
         android:textSize="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/co2ID"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -48,33 +45,26 @@
 
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="164dp"
         android:layout_toLeftOf="@+id/modelID"
-        android:paddingLeft="5dp"
         android:text="distanceID"
         android:textColor="#6C6F6F"
         android:textSize="20dp"
-        app:layout_constraintEnd_toStartOf="@+id/co2ID"
-        app:layout_constraintHorizontal_bias="0.126"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/rideID"
         app:layout_constraintTop_toBottomOf="@+id/rideID" />
 
     <TextView
         android:id="@+id/co2ID"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="35dp"
         android:layout_above="@+id/rideID"
         android:layout_alignParentEnd="true"
-        android:layout_marginEnd="29dp"
         android:paddingLeft="60dp"
         android:paddingTop="10dp"
         android:text="co2ID"
         android:textColor="#0C640F"
         android:textSize="20dp"
         app:layout_constraintBottom_toBottomOf="@+id/modelID"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/modelID" />
+        app:layout_constraintEnd_toEndOf="@+id/dateID" />
 
     <TextView
         android:id="@+id/modelID"
@@ -83,15 +73,12 @@
         android:layout_alignTop="@+id/rideID"
         android:layout_alignParentEnd="true"
 
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
         android:paddingLeft="1dp"
         android:paddingEnd="20dp"
         android:text="modelID"
         android:textColor="#6C6F6F"
         android:textSize="20dp"
-        app:layout_constraintEnd_toStartOf="@+id/co2ID"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/distanceID"
         app:layout_constraintTop_toBottomOf="@+id/distanceID" />
 
 </android.support.constraint.ConstraintLayout>
