@@ -119,4 +119,16 @@ public class DataBase extends SQLiteOpenHelper {
         Cursor image_ptr = sqldb.rawQuery(query, null);
         return image_ptr;
     }
+
+    public void clearTripsDB(){
+        sqldb = getWritableDatabase();
+        String query = "DELETE FROM " + TRIP_TABLE_NAME;
+        sqldb.execSQL(query);
+    }
+
+    public void clearCarsDB(){
+        sqldb = getWritableDatabase();
+        String query = "DELETE FROM " + CAR_TABLE_NAME;
+        sqldb.execSQL(query);
+    }
 }
