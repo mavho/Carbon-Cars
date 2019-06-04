@@ -64,7 +64,7 @@
         android:textSize="30sp"
         app:layout_constraintBottom_toTopOf="@+id/imageView5"
         app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="22dp" />
+        tools:layout_editor_absoluteX="-16dp" />
 
     <ImageView
         android:id="@+id/imageView5"
