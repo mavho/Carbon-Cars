@@ -79,41 +79,40 @@ public class MainActivity extends AppCompatActivity {
     }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(data != null){
-
-        }
-        tripname = data.getStringExtra("tripname");
-        carname = data.getStringExtra("carname");
-        Log.d("main", "adf + "+ carname + " " + tripname);
-        Cursor car = carboncars_db.find(carname);
-        if(car == null){
-            Log.d("main", "didnt find anythign");
-        }else{
-            Log.d("main", "anythign");
-        }
-        double mpg = 0.0;
-        while(car.moveToNext()){
-            mpg = car.getDouble(2);
-        }
-        switch(requestCode) {
-            //one is from startservice
-            case 1:
-                //start service once selected car
-                if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
-                        != PackageManager.PERMISSION_GRANTED
-                        && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
-                        != PackageManager.PERMISSION_GRANTED) {
-                    //request permissions
-                    ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}
-                            ,REQUEST_CODE);
-                }else{
-                    myIntent = new Intent(this,LocationService.class);
-                    myIntent.putExtra("mpg",mpg);
-                    startService(myIntent);
-                    registerReceiver();
-                    Log.d("debug", "Service Started");
-                }
-                break;
+        if(data != null) {
+            tripname = data.getStringExtra("tripname");
+            carname = data.getStringExtra("carname");
+            Log.d("main", "adf + " + carname + " " + tripname);
+            Cursor car = carboncars_db.find(carname);
+            if (car == null) {
+                Log.d("main", "didnt find anythign");
+            } else {
+                Log.d("main", "anythign");
+            }
+            double mpg = 0.0;
+            while (car.moveToNext()) {
+                mpg = car.getDouble(2);
+            }
+            switch (requestCode) {
+                //one is from startservice
+                case 1:
+                    //start service once selected car
+                    if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                            != PackageManager.PERMISSION_GRANTED
+                            && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
+                            != PackageManager.PERMISSION_GRANTED) {
+                        //request permissions
+                        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}
+                                , REQUEST_CODE);
+                    } else {
+                        myIntent = new Intent(this, LocationService.class);
+                        myIntent.putExtra("mpg", mpg);
+                        startService(myIntent);
+                        registerReceiver();
+                        Log.d("debug", "Service Started");
+                    }
+                    break;
+            }
         }
     }
 
