@@ -30,9 +30,6 @@ public class MainActivity extends AppCompatActivity {
     public static String BROADCAST_ACTION = "ucsc121.carboncars";
     MyBroadCastReceiver broadCastReceiver;
 
-    //for car list fragment
-    FragmentManager fragmentManager;
-
     //reference to the database.
     DataBase carboncars_db;
     @Override
@@ -64,9 +61,11 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v){
                 if (start){
+                    startButton.setBackground(getDrawable(R.drawable.round_rbutt));
                     startService(v);
                     start = false;
                 }else{
+                    startButton.setBackground(getDrawable(R.drawable.round_butt));
                     stopService(v);
                     start = true;
                 }
