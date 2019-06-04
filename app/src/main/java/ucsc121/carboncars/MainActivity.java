@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -19,6 +20,8 @@ import android.widget.TextView;
 
 
 public class MainActivity extends AppCompatActivity {
+    String tripname;
+    String carname;
     //identifier
     final static int REQUEST_CODE = 100;
     Intent myIntent;
@@ -71,25 +74,47 @@ public class MainActivity extends AppCompatActivity {
     //if statement
     public void startService(View view){
         Intent intent = new Intent(this, CarsListActivity.class);
-        startActivity(intent);
+        startActivityForResult(intent, 1);
 
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(data != null){
 
-       //start service once selected car
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED
-                && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED) {
-            //request permissions
-            ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}
-                    ,REQUEST_CODE);
-        }else{
-            myIntent = new Intent(this,LocationService.class);
-            startService(myIntent);
-            registerReceiver();
-            Log.d("debug", "Service Started");
         }
-
-//        carboncars_db.insertTripData(123.0, 32.00,"main", "123123");
+        tripname = data.getStringExtra("tripname");
+        carname = data.getStringExtra("carname");
+        Log.d("main", "adf + "+ carname + " " + tripname);
+        Cursor car = carboncars_db.find(carname);
+        if(car == null){
+            Log.d("main", "didnt find anythign");
+        }else{
+            Log.d("main", "anythign");
+        }
+        double mpg = 0.0;
+        while(car.moveToNext()){
+            mpg = car.getDouble(2);
+        }
+        switch(requestCode) {
+            //one is from startservice
+            case 1:
+                //start service once selected car
+                if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                        != PackageManager.PERMISSION_GRANTED
+                        && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
+                        != PackageManager.PERMISSION_GRANTED) {
+                    //request permissions
+                    ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}
+                            ,REQUEST_CODE);
+                }else{
+                    myIntent = new Intent(this,LocationService.class);
+                    myIntent.putExtra("mpg",mpg);
+                    startService(myIntent);
+                    registerReceiver();
+                    Log.d("debug", "Service Started");
+                }
+                break;
+        }
     }
 
     public void stopService(View view){
@@ -124,7 +149,8 @@ public class MainActivity extends AppCompatActivity {
                 double poundsCO2 = intent.getDoubleExtra("pOfCO2", 0.0);
                 TextView out = findViewById(R.id.total_distance);
                 out.setText("Total distance " + distance + " km\n" + "Approx C02 emitted " + poundsCO2);
-                carboncars_db.insertTripData(distance,"test", poundsCO2, "trip", "some date");
+
+                carboncars_db.insertTripData(distance,carname, poundsCO2, tripname, "some date");
             }catch(Exception e){
                 e.printStackTrace();
             }

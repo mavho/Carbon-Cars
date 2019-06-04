@@ -37,7 +37,6 @@ public class tripHistory extends AppCompatActivity {
         setContentView(R.layout.activity_trip_history);
         pastTrip = findViewById(R.id.history);
         carbondb = new DataBase(this, "CARBON_DB", null, 1);
-        carbondb.insertTripData(123.0, 32.00,"main", "01/02/2019");
         Cursor trips = carbondb.getAllTrips();
         while(trips.moveToNext()){
             //date distance CO2

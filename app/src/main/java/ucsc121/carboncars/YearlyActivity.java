@@ -40,7 +40,6 @@ public class YearlyActivity extends AppCompatActivity {
         cartesian.crosshair().enabled(true);
         cartesian.crosshair()
                 .yLabel(true)
-                // TODO ystroke
                 .yStroke((Stroke) null, null, null, (String) null, (String) null);
 
         cartesian.tooltip().positionMode(TooltipPositionMode.POINT);
@@ -48,7 +47,7 @@ public class YearlyActivity extends AppCompatActivity {
         cartesian.title("Pounds of CO2 Emitted in the Past Year");
 
         cartesian.yAxis(0).title("Pounds of CO2 Emitted");
-        cartesian.xAxis(0).labels().padding(2d, 2d, 2d, 2d);
+        cartesian.xAxis(0).labels().padding(2d, 0d, 2d, 0d);
 
         List<DataEntry> seriesData = new ArrayList<>();
         seriesData.add(new CustomDataEntry("Jan", 3.6));
@@ -70,7 +69,7 @@ public class YearlyActivity extends AppCompatActivity {
         Mapping series1Mapping = set.mapAs("{ x: 'x', value: 'value' }");
 
         Line series1 = cartesian.line(series1Mapping);
-        series1.name("BranMdy");
+        series1.name("Month");
         series1.stroke("{color: '#8fd694', thickness: 3, lineJoin: 'bevel', lineCap: 'round' }");
         series1.hovered().markers().enabled(true);
         series1.hovered().markers()

@@ -19,7 +19,7 @@ import android.widget.Toast;
 public class LocationService extends Service {
     private LocationManager locationManager;
     private LocationListener locListener = new myLocationListener();
-    public int total_distance = 0;
+    public double total_distance = 0;
     private boolean gps_enabled = false;
     private boolean network_enabled = false;
     private Handler handler = new Handler();
@@ -41,7 +41,8 @@ public class LocationService extends Service {
         Log.d("on destroy", total_distance + " km");
         sendBroadcast();
         handler.removeCallbacks(rt);
-        locationManager.removeUpdates(locListener);
+        if( locationManager != null)
+            locationManager.removeUpdates(locListener);
     }
 
     @Override
@@ -65,9 +66,10 @@ public class LocationService extends Service {
     //function to send data to an activity
     private void sendBroadcast(){
         try{
+            Double mpg = intent.getDoubleExtra("mpg", 28.0);
             double CO2_pounds;
             Intent broadCastIntent = new Intent();
-            CO2_pounds = CalculatePoundsCO2(total_distance, 1.0/28.0 );
+            CO2_pounds = CalculatePoundsCO2(total_distance, 1.0/mpg);
             broadCastIntent.setAction(MainActivity.BROADCAST_ACTION);
             broadCastIntent.putExtra("pOfCO2",CO2_pounds);
             broadCastIntent.putExtra("distance", total_distance);
