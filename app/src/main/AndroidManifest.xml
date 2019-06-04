@@ -14,12 +14,16 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".YearlyActivity"></activity>
-        <activity android:name=".CarInputActivity"
-            android:theme="@style/AppTheme.NoActionBar"
-            />
+        <activity
+            android:name=".MonthlyActivity"
+            android:label="@string/title_activity_monthly"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".YearlyActivity" />
+        <activity
+            android:name=".CarInputActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".WeeklyActivity" />
-        <activity android:name=".CarsListActivity"/>
+        <activity android:name=".CarsListActivity" />
 
         <service
             android:name=".LocationService"
@@ -27,9 +31,9 @@
             android:exported="true" />
 
         <activity android:name=".DatavizActivity" />
-
-        <activity android:name=".tripHistory" android:label="Trip History" />
-
+        <activity
+            android:name=".tripHistory"
+            android:label="Trip History" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -37,7 +41,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
     </application>
 
 </manifest>
