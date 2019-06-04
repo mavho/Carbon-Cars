@@ -3,8 +3,6 @@ package ucsc121.carboncars;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
-import android.widget.Button;
 
 import com.anychart.AnyChart;
 import com.anychart.AnyChartView;
@@ -38,7 +36,7 @@ public class MonthlyActivity extends AppCompatActivity {
         setContentView(R.layout.activity_monthly);
 
         AnyChartView anyChartView = findViewById(R.id.any_chart_view);
-        anyChartView.setProgressBar(findViewById(R.id.progress_bar));
+        anyChartView.setProgressBar(findViewById(R.id.progress_bar1));
 
         Cartesian cartesian = AnyChart.line();
 
