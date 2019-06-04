@@ -74,8 +74,9 @@
         android:id="@+id/imageView5"
         android:layout_width="411dp"
         android:layout_height="190dp"
+        app:layout_constraintBottom_toTopOf="@+id/location_service_but"
+        app:layout_constraintTop_toBottomOf="@+id/editText2"
         app:srcCompat="@drawable/logo"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="60dp" />
+        tools:layout_editor_absoluteX="0dp" />
 
 </android.support.constraint.ConstraintLayout>
