@@ -46,6 +46,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<tripViewHolder> {
         holder.dateID.setText(itemList.get(i).getDateID());
         holder.distanceID.setText(itemList.get(i).getDistanceID());
         holder.co2ID.setText(itemList.get(i).getCo2ID());
+        holder.modelID.setText(itemList.get(i).getModelID());
 
 
 

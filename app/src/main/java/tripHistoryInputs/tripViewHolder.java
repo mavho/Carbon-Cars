@@ -11,6 +11,7 @@ public class tripViewHolder extends RecyclerView.ViewHolder implements View.OnCl
     public TextView dateID;
     public TextView distanceID;
     public TextView co2ID;
+    public TextView modelID;
     public tripViewHolder(View itemView){
         super(itemView);
         itemView.setOnClickListener(this);
@@ -19,6 +20,7 @@ public class tripViewHolder extends RecyclerView.ViewHolder implements View.OnCl
         dateID = (TextView) itemView.findViewById(R.id.dateID);
         distanceID = (TextView) itemView.findViewById(R.id.distanceID);
         co2ID = (TextView) itemView.findViewById(R.id.co2ID);
+        modelID = (TextView) itemView.findViewById(R.id.modelID);
     }
 
     @Override

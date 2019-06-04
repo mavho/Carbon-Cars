@@ -36,14 +36,20 @@ public class tripHistory extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trip_history);
         pastTrip = findViewById(R.id.history);
-        carbondb = new DataBase(this, "CARBON_DB", null, 1);
+
+        carbondb = new DataBase(this, "CARBON_DB", null, 2);
+        carbondb.insertTripData(123.0, "Toyota",34.3, "Trip2","01/27/19");
+        carbondb.insertTripData(345.0, "Mazda",56.3, "Test2","01/28/19");
+        carbondb.insertTripData(9823.0, "Honda",51.3, "Test4","01/24/19");
+
         Cursor trips = carbondb.getAllTrips();
         while(trips.moveToNext()){
-            //date distance CO2
-            String tripNum = trips.getString(trips.getColumnIndex("TRIP"));
-            String date = trips.getString(trips.getColumnIndex("DATE"));
-            Integer distance = trips.getInt(trips.getColumnIndex("DISTANCE"));
-            Integer co2 = trips.getInt(3);
+            //trip,carmodel,date,distance,co2
+            String tripNum = trips.getString(0);
+            String model = trips.getString(1);
+            String date = trips.getString(2);
+            Integer distance = trips.getInt(3);
+            Integer co2 = trips.getInt(4);
             Log.d("trip history","in while loop");
 
 
@@ -51,7 +57,8 @@ public class tripHistory extends AppCompatActivity {
             String j = date;
             String k = Integer.toString(distance);
             String l = Integer.toString(co2);
-            tripDetailObject cardata1 = new tripDetailObject(i,j,k,l);
+            String m = model;
+            tripDetailObject cardata1 = new tripDetailObject(i,m,j,k,l);
 //            tripDetailObject cardata2 = new tripDetailObject(j);
 //            tripDetailObject cardata3 = new tripDetailObject(k);
 //            tripDetailObject cardata4 = new tripDetailObject(l);
