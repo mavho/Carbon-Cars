@@ -10,9 +10,6 @@ import android.database.Cursor;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.ListFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -20,9 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -38,7 +33,8 @@ public class MainActivity extends AppCompatActivity {
     /*******So I can receive data from service from activities******/
     public static String BROADCAST_ACTION = "ucsc121.carboncars";
     MyBroadCastReceiver broadCastReceiver;
-
+    //startButton
+    Button startButton;
     //reference to the database.
     DataBase carboncars_db;
     @Override
@@ -49,15 +45,12 @@ public class MainActivity extends AppCompatActivity {
 
         carboncars_db.insertTripData(30.0, "Subaru Outback", 45.2, "Idaho","");
         //listener for start button
-        Button startButton = findViewById(R.id.location_service_but);
+        startButton = findViewById(R.id.location_service_but);
         startButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
                 if (start){
-                    startButton.setBackground(getDrawable(R.drawable.round_rbutt));
-                    startButton.setText("STOP LOCATION TRACKER");
-                    startService(v);
-                    start = false;
+                    startCarService(v);
                 }else{
                     startButton.setBackground(getDrawable(R.drawable.round_butt));
                     startButton.setText("START LOCATION TRACKER");
@@ -95,13 +88,10 @@ public class MainActivity extends AppCompatActivity {
         unregisterReceiver(broadCastReceiver);
     }
 
-
-    //right now if user allows the thing, they'll have to click the button again to go through the
-    //if statement
-    public void startService(View view){
+    //function to start the car input activity
+    public void startCarService(View view){
         Intent intent = new Intent(this, CarsListActivity.class);
         startActivityForResult(intent, 1);
-
     }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -133,6 +123,10 @@ public class MainActivity extends AppCompatActivity {
                     } else {
                         myIntent = new Intent(this, LocationService.class);
                         myIntent.putExtra("mpg", mpg);
+                        //we got a return so start
+                        startButton.setBackground(getDrawable(R.drawable.round_rbutt));
+                        startButton.setText("STOP LOCATION TRACKER");
+                        start = false;
                         startService(myIntent);
                         registerReceiver();
                         Log.d("debug", "Service Started");
