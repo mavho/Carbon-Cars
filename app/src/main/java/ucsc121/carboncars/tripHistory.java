@@ -52,7 +52,12 @@ public class tripHistory extends AppCompatActivity {
             Log.d("trip history","in while loop");
 
             double tdistance = Double.parseDouble(df.format(distance));
-            double tco2 = Double.parseDouble(df.format(co2));
+            double tco2;
+            try {
+                tco2 = Double.parseDouble(df.format(co2));
+            }catch (NumberFormatException ex){
+                tco2 = 0.0;
+            }
 
             String i = tripNum;
             String j = date;
