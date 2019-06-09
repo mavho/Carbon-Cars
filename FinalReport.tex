@@ -114,6 +114,7 @@ In the input cars activity, there is a form that the user fills out. The user ca
 The location service tracks the user, calculating distance traveled. Once the user stops the location tracker, which they can tell because the button has turned red, the data is then recorded into a sqlite database. 
 
 %Probably talk about trip history here.
+From there the data from the sqlite database is queried in the Trip History activity that uses an adapter to display and populate the main layout accordingly.We use a RecyclerView since it is versatile for our purpose and added scrolling for better viewing.
 
 %------------------------------------------------
 
@@ -126,6 +127,8 @@ Most of the implementation for the location service hasn't changed from its inte
 The input cars activity was just meant to be a simple form where the user could enter in information about their car. The activity communicates with the main activity using data passed through intents. Within the activity are functions to check whether of not a user has correctly filled out the form ie: is the a name for the car, are the radio buttons selected within the radio button group, is the mpg even a number?
 
 In order for the various activities to store and use data, a sqlite database class was created in order to facilitate this. Thus a reference to  the the class is initialized in each class, which all use the class functions to help insert/get data. Currently there is only insertion functions as well as getter functions that return cursors based on selection. A few more functions, such as updating or clearing the database would've be nice. 
+
+The trip history pages uses the sqlite database to populate the Trip History layout with all of the trips that the user has initiated.
 
 
 \section{Logo Citations}
@@ -146,12 +149,14 @@ I would say the app is around eighty percent done. There are still bugs, as expl
 
 
 \subsection{Abdul's Contribution}
-
+I implemented the "Trip History" page so that any data from the User is automatically updated in the trip history page so that they can see how many miles they traveled, amount of emissions, date and other useful tidbits of information for the user to know. I helped around with other parts such as U/I suggestions and gave my input when necessary.
 %----------------------------------------------------------------------------------------
 %	REFERENCE LIST
 %----------------------------------------------------------------------------------------
 \section{Future Work}
 There are some known bugs. Currently, if a user inputs a car name with an apostrophe, the insertion will not be valid. Additionally, if the app is exited, the thread will stop running... which is not supposed to happen.
+
+Some future work that would be useful for the app would be a more detailed report when the User clicks on a trip in the trip history page.
 %----------------------------------------------------------------------------------------
 
 \end{document}
