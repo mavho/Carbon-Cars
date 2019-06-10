@@ -87,11 +87,13 @@ public class LocationService extends Service {
         try {
             gps_enabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
         } catch (Exception ex) {
+            Toast.makeText(getBaseContext(), "Location not enabled!", Toast.LENGTH_LONG).show();
             Log.d("Exception", "gps not enabled");
         }
         try {
             network_enabled = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
         } catch (Exception ex) {
+            Toast.makeText(getBaseContext(), "Location not enabled!", Toast.LENGTH_LONG).show();
             Log.d("Exception", "network not enabled");
         }
         if (gps_enabled) {
@@ -104,7 +106,7 @@ public class LocationService extends Service {
                 locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locListener);
             }
         }else{
-            Toast.makeText(getBaseContext(), "Location not enabled!", Toast.LENGTH_LONG).show();
+//            Toast.makeText(getBaseContext(), "Location not enabled!", Toast.LENGTH_LONG).show();
         }
         if (network_enabled) {
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
@@ -116,7 +118,7 @@ public class LocationService extends Service {
                 locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locListener);
             }
         }else{
-            Toast.makeText(getBaseContext(), "Location not enabled!", Toast.LENGTH_LONG).show();
+//            Toast.makeText(getBaseContext(), "Location not enabled!", Toast.LENGTH_LONG).show();
         }
         Log.v("Debug", "in on create..3");
     }

@@ -33,44 +33,62 @@ public class DatavizActivity extends AppCompatActivity {
         int count = 0;
         double totalCarbon = 0;
 
-        if(size.moveToFirst()){
-            do{
-                String date = size.getString(2);
-                Double co2 = size.getDouble(4);
-                totalCarbon += co2;
-
-                dateList.add(date);
-
-                count++;
-            } while(size.moveToNext());
-        }
-
-        size.close();
-
-        long numDays = getDays(dateList.get(0), dateList.get(count - 1));
-        Log.d("dataViz", "numDays: " + numDays );
-        long dailyCarbon = (long)totalCarbon/numDays;
-        Log.d("dataViz", "dailyCarbon: " + dailyCarbon);
-
         ImageView image = (ImageView) findViewById(R.id.traffic_light);
-
-        TextView co2Pounds = findViewById(R.id.co2Tons2);
-        co2Pounds.setText(dailyCarbon + " pounds");
-
         TextView sum = findViewById(R.id.summary);
+        TextView co2Pounds = findViewById(R.id.co2Tons2);
 
-        if(dailyCarbon < 21.0){
-            image.setImageResource(R.drawable.green_traffic_light);
-            sum.setText("You're doing great! Keep it up, and try and stay below the American average of 26 lbs/day!");
-        }
-        else if(dailyCarbon >= 21.0 && dailyCarbon <= 31.0){
-            image.setImageResource(R.drawable.yellow_traffic_light);
-            sum.setText("You're doing well, but there's always room for improvement!");
+        if(!carbonDB.isEmpty("TRIPS")){
+            Log.d("dataViz", "TRIPS LOGGED");
+            if(size.moveToFirst()){
+                do{
+                    String date = size.getString(2);
+                    Double co2 = size.getDouble(4);
+                    Log.d("dataViz", "Trip " + count + ": " + co2);
+
+                    totalCarbon += co2;
+
+                    dateList.add(date);
+
+                    count++;
+                } while(size.moveToNext());
+            }
+
+            Log.d("dataViz", "LOGGED " + count + " trips");
+
+            size.close();
+
+            Double numDays = (double)getDays(dateList.get(0), dateList.get(count - 1));
+            Log.d("dataViz", "numDays: " + numDays );
+
+
+
+            double dailyCarbon = totalCarbon/numDays;
+            String roundedDailyCarbon = String.format("%.2f", dailyCarbon);
+            Log.d("dataViz", "dailyCarbon: " + roundedDailyCarbon);
+
+            co2Pounds.setText(roundedDailyCarbon + " pounds");
+
+
+            if(dailyCarbon < 21.0){
+                image.setImageResource(R.drawable.green_traffic_light);
+                sum.setText("You're doing great! Keep it up, and try and stay below the American average of 26 lbs/day!");
+            }
+            else if(dailyCarbon >= 21.0 && dailyCarbon <= 31.0){
+                image.setImageResource(R.drawable.yellow_traffic_light);
+                sum.setText("You're doing well, but there's always room for improvement!");
+            }
+            else{
+                image.setImageResource(R.drawable.red_traffic_light);
+                sum.setText("Try a little harder to get below the American average of 26 lbs/day. You can do it!");
+            }
         }
         else{
-            image.setImageResource(R.drawable.red_traffic_light);
-            sum.setText("Try a little harder to get below the American average of 26 lbs/day. You can do it!");
+            Log.d("dataViz", "NO TRIPS LOGGED");
+            image.setImageResource(R.drawable.yellow_traffic_light);
+            sum.setText("You haven't logged any trips yet. Try using the location tracker to do so!");
         }
+
+
 
 
 
@@ -94,6 +112,11 @@ public class DatavizActivity extends AppCompatActivity {
                 startActivity(weeklyActivityIntent);
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
     }
 
     public long getDays(String date1, String date2){
