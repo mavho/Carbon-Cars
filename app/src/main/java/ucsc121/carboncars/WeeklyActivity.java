@@ -20,6 +20,7 @@ import com.anychart.graphics.vector.Stroke;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class WeeklyActivity extends AppCompatActivity {
@@ -32,7 +33,7 @@ public class WeeklyActivity extends AppCompatActivity {
         setContentView(R.layout.activity_weekly);
 
         AnyChartView anyChartView = findViewById(R.id.any_chart_view);
-        anyChartView.setProgressBar(findViewById(R.id.progressBar));
+        anyChartView.setProgressBar(findViewById(R.id.progress_bar));
 
         Cartesian cartesian = AnyChart.line();
 
@@ -53,19 +54,18 @@ public class WeeklyActivity extends AppCompatActivity {
         cartesian.xAxis(0).labels().padding(2d, 0d, 2d, 0d);
 
         carbonDB = new DataBase(this, "CARBON_DB", null, 2);
-
         List<DataEntry> seriesData = new ArrayList<>();
 
-//        boolean first = true;
-//        int cursorCounter = 0;
-//        int lastMonth = -1;
-//        String savedDay = "";
-//        Double lastCO2 = 0.0;
-////        String lastDate = "";
-//        Boolean setLastDate = false;
-//
-//        Calendar lastDate = Calendar.getInstance();
-//        Calendar newEntryDate = Calendar.getInstance();
+        boolean first = true;
+        int cursorCounter = 0;
+        int lastMonth = -1;
+        String savedDay = "";
+        Double lastCO2 = 0.0;
+//        String lastDate = "";
+        Boolean setLastDate = false;
+
+        Calendar lastDate = Calendar.getInstance();
+        Calendar newEntryDate = Calendar.getInstance();
 
         int numEntries = 0;
 
@@ -85,17 +85,121 @@ public class WeeklyActivity extends AppCompatActivity {
         Cursor trips = carbonDB.getAllTrips();
 //        trips.moveToNext();
 
-
         int count = 0;
+        boolean isSame = false;
+        Double cumulative = 0.0;
+        String prevDate = "";
+
+        // iterate through the db trip entries and add dates to chart
         if(trips.moveToFirst()){
             do{
+                String date = trips.getString(2); // get date
+                String nums[] = date.split("/");
+                if (nums[1].charAt(0) == '0')
+                    nums[1] = nums[1].substring(1); // check if theres a 0 in day string
+                if (nums[0].charAt(0) == '0')
+                    nums[0] = nums[0].substring(1); // check if theres a 0 in month string
 
-                if(count == 7) break;
+                Calendar currentDate = Calendar.getInstance();
+                currentDate.set(Calendar.DAY_OF_MONTH, Integer.parseInt(nums[0]));
+                currentDate.set(Calendar.MONTH, Integer.parseInt(nums[1]));
+                currentDate.set(Calendar.YEAR, Integer.parseInt(nums[2]));
+
+                Date todayDate = Calendar.getInstance().getTime();
+                Calendar today = Calendar.getInstance();
+                today.setTime(todayDate);
+
+                long daysBetweenDates = daysBetweenDates(currentDate, today);
+                if(daysBetweenDates <= 7) break;
+
+            }while(trips.moveToNext());
+
+            do{
+                Log.d("monthly", "prevDate: " + prevDate );
+                if(count >= 7) break; // stop adding entries if added 30
+
+                // get date and co2
                 Log.d("MonthlyActivity", "Entered main loop " + nextCount );
                 String date = trips.getString(2); // get date
                 Log.d("MonthlyActivity", "Date: + " + date);
-
                 Double co2 = trips.getDouble(4); // get co2
+
+                if(isSame){ // if the date is the same as before (as tracked by the boolean)
+                    if(checkIfNextSame(trips, date)){ // check if the next date is the same, and prepare
+                        cumulative += co2;
+                        isSame = true;
+                        continue;
+                    }
+                    else{ // add a new entry with the cumulative co2 for the day
+                        String nums[] = date.split("/");
+                        if (nums[1].charAt(0) == '0')
+                            nums[1] = nums[1].substring(1); // check if theres a 0 in day string
+                        if (nums[0].charAt(0) == '0')
+                            nums[0] = nums[0].substring(1); // check if theres a 0 in month string
+
+                        Calendar currentDate = Calendar.getInstance();
+                        currentDate.set(Calendar.DAY_OF_MONTH, Integer.parseInt(nums[0]));
+                        currentDate.set(Calendar.MONTH, Integer.parseInt(nums[1]));
+                        currentDate.set(Calendar.YEAR, Integer.parseInt(nums[2]));
+
+                        // if there isa prev date set
+                        if(!prevDate.equals("")){
+                            String nums2[] = prevDate.split("/");
+                            if (nums2[1].charAt(0) == '0')
+                                nums2[1] = nums2[1].substring(1); // check if theres a 0 in day string
+                            if (nums2[0].charAt(0) == '0')
+                                nums2[0] = nums2[0].substring(1); // check if theres a 0 in month string
+
+                            Calendar calPrevDate = Calendar.getInstance();
+                            calPrevDate.set(Calendar.DAY_OF_MONTH, Integer.parseInt(nums2[0]));
+                            calPrevDate.set(Calendar.MONTH, Integer.parseInt(nums2[1]));
+                            calPrevDate.set(Calendar.YEAR, Integer.parseInt(nums2[2]));
+
+                            long daysBetween = daysBetweenDates(calPrevDate, currentDate);
+                            Log.d("monthly", "Days between: " + daysBetween);
+
+                            if(daysBetween > 1){
+                                Calendar tempDate = calPrevDate;
+                                tempDate.add(Calendar.DAY_OF_YEAR, 1);
+
+                                for(int i = 0; i < daysBetween - 1; i++){
+                                    String month = Integer.toString(tempDate.get(Calendar.MONTH));
+                                    String day = Integer.toString(tempDate.get(Calendar.DAY_OF_MONTH));
+
+                                    String newDate = day + "/" + month;
+                                    seriesData.add(new CustomDataEntry(newDate, 0.0));
+
+                                    tempDate.add(Calendar.DAY_OF_YEAR, 1);
+                                    count++;
+                                    if(count >= 7) break;
+                                }
+                            }
+                        }
+
+                        if(count >= 7) break;
+
+                        // add the current date as an entry
+                        String finalDate = nums[0] + "/" + nums[1];
+                        seriesData.add(new CustomDataEntry(finalDate, co2 + cumulative));
+
+                        // reset the same day trackers
+                        cumulative = 0.0;
+                        isSame = false;
+
+                        prevDate = date;
+                        count++;
+
+                        continue;
+                    }
+                }
+
+                // first check to see if the next date will be the same
+                if(checkIfNextSame(trips, date)){
+                    Log.d("monthly", "Next is same");
+                    cumulative += co2;
+                    isSame = true;
+                    continue;
+                }
 
                 String nums[] = date.split("/");
                 if (nums[1].charAt(0) == '0')
@@ -103,21 +207,61 @@ public class WeeklyActivity extends AppCompatActivity {
                 if (nums[0].charAt(0) == '0')
                     nums[0] = nums[0].substring(1); // check if theres a 0 in month string
 
+                Calendar currentDate = Calendar.getInstance();
+                currentDate.set(Calendar.DAY_OF_MONTH, Integer.parseInt(nums[0]));
+                currentDate.set(Calendar.MONTH, Integer.parseInt(nums[1]));
+                currentDate.set(Calendar.YEAR, Integer.parseInt(nums[2]));
+
+                // if there isa prev date set
+                if(!prevDate.equals("")){
+                    String nums2[] = prevDate.split("/");
+                    if (nums2[1].charAt(0) == '0')
+                        nums2[1] = nums2[1].substring(1); // check if theres a 0 in day string
+                    if (nums2[0].charAt(0) == '0')
+                        nums2[0] = nums2[0].substring(1); // check if theres a 0 in month string
+
+                    Calendar calPrevDate = Calendar.getInstance();
+                    calPrevDate.set(Calendar.DAY_OF_MONTH, Integer.parseInt(nums2[0]));
+                    calPrevDate.set(Calendar.MONTH, Integer.parseInt(nums2[1]));
+                    calPrevDate.set(Calendar.YEAR, Integer.parseInt(nums2[2]));
+
+                    long daysBetween = daysBetweenDates(calPrevDate, currentDate);
+                    Log.d("monthly", "Days between: " + daysBetween);
+
+                    if(daysBetween > 1){
+                        Calendar tempDate = calPrevDate;
+                        tempDate.add(Calendar.DAY_OF_YEAR, 1);
+
+                        for(int i = 0; i < daysBetween - 1; i++){
+                            String month = Integer.toString(tempDate.get(Calendar.MONTH));
+                            String day = Integer.toString(tempDate.get(Calendar.DAY_OF_MONTH));
+
+                            String newDate = day + "/" + month;
+                            seriesData.add(new CustomDataEntry(newDate, 0.0));
+
+                            tempDate.add(Calendar.DAY_OF_YEAR, 1);
+                            count++;
+
+                            if(count >= 7) break;
+                        }
+                    }
+                }
+
+                if(count >= 7) break;
+
                 String finalDate = nums[0] + "/" + nums[1];
 
-//                String day = getDay(date);
+                prevDate = date;
+
                 seriesData.add(new CustomDataEntry(finalDate, co2));
+
                 count++;
             }while(trips.moveToNext());
         }
 
-//        seriesData.add(new CustomDataEntry("Mon", 3.6));
-//        seriesData.add(new CustomDataEntry("Tue", 5.6));
-//        seriesData.add(new CustomDataEntry("Wed", 8.6));
-//        seriesData.add(new CustomDataEntry("Thu", 10.6));
-//        seriesData.add(new CustomDataEntry("Fri", 4.6));
-//        seriesData.add(new CustomDataEntry("Sat", 1.6));
-//        seriesData.add(new CustomDataEntry("Sun", 2.6));
+        Log.d("monthly", "Count: " + count);
+
+
 
         Set set = Set.instantiate();
         set.data(seriesData);
@@ -176,6 +320,33 @@ public class WeeklyActivity extends AppCompatActivity {
                 result = "Sat";
                 break;
         }
+
+        return result;
+    }
+
+    public boolean checkIfNextSame(Cursor c, String date){
+        if(c.moveToNext()){
+            String newDate = c.getString(2);
+            c.moveToPrevious();
+            if(date.equals(newDate)) return true;
+            return false;
+        }
+        return false;
+    }
+
+    // finding difference in time based on
+    // https://stackoverflow.com/questions/3796841/getting-the-difference-between-date-in-days-in-java
+    public long daysBetweenDates(Calendar first, Calendar last){
+        Date startTime = first.getTime();
+        Date lastTime = last.getTime();
+
+        long realStartTime = startTime.getTime();
+        long realLastTime = lastTime.getTime();
+        Log.d("time", "start " + realStartTime );
+        Log.d("time", "end " + realLastTime );
+
+        long dif = realLastTime - realStartTime;
+        long result = dif/(1000 * 60 * 60 * 24);
 
         return result;
     }

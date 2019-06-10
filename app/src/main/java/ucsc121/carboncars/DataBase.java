@@ -135,6 +135,16 @@ public class DataBase extends SQLiteOpenHelper {
         sqldb.execSQL(query);
     }
 
+    public boolean isEmpty(String tableName){
+        boolean isEmpty = true;
+
+        Cursor c = sqldb.rawQuery("SELECT COUNT(*) FROM " + tableName, null);
+        if(c.moveToFirst() && c != null) isEmpty = (c.getInt(0) == 0);
+        c.close();
+
+        return isEmpty;
+    }
+
     public Cursor getAllTrips(){
         sqldb = getWritableDatabase();
         String selectAll = "SELECT * FROM " + TRIP_TABLE_NAME;
