@@ -28,13 +28,13 @@ public class CarInputActivity extends AppCompatActivity {
         Log.d("submitform", "submit form");
         int check_submit = check_submit();
         if(check_submit == 1){
-            Log.d("submitfor", "fail 1");
+            Log.d("submitform", "fail 1");
             Toast.makeText(getBaseContext(), "Please fill out missing fields", Toast.LENGTH_LONG);
         }else if(check_submit == 2){
-            Log.d("submitfor", "fail 2");
+            Log.d("submitform", "fail 2");
             Toast.makeText(getBaseContext(), "Please enter a number for mpg", Toast.LENGTH_LONG);
         }else{
-            Log.d("submitfor", "success");
+            Log.d("submitform", "success");
             Toast.makeText(getBaseContext(), "Successfully inserted car data!", Toast.LENGTH_LONG);
             finish();
         }

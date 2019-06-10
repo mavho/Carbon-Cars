@@ -1,7 +1,5 @@
 package tripHistoryInputs;
 
-import android.database.Cursor;
-
 public class tripDetailObject {
     private String rideID;
     private String dateID;

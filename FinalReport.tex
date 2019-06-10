@@ -33,7 +33,7 @@
 \usepackage[hmarginratio=1:1,top=32mm,columnsep=20pt]{geometry} % Document margins
 \usepackage[hang, small,labelfont=bf,up,textfont=it,up]{caption} % Custom captions under/above floats in tables or figures
 \usepackage{booktabs} % Horizontal rules in tables
-
+\usepackage{graphicx}
 \usepackage{lettrine} % The lettrine is the first enlarged letter at the beginning of the text
 
 \usepackage{enumitem} % Customized lists
@@ -108,6 +108,12 @@
 \section{Components}
 
 When the user first starts the app, they are greeted with the main activity, which consists of a button that starts the location tracker, the logo of carbon cars, as well as a bottom bar navigation. Upon pressing the start button, another activity opens up a list of inputted vehicles that the user has inputted into the app, as well as an edit text view where the user has to input the name of the trip. To start the location tracker, all the user needs to do is to enter a name in the edit text, then press a car from within the list. If the user forgets to put in a name, the location won't start, they have to enter a name, then press a car from the list. To enter a car to the list, the user has to be in the main activity, and press the input cars button within the bottom navigation.
+\begin{figure}[h!]
+  \includegraphics[width=\linewidth,height=14cm,keepaspectratio]{mainscreen.jpg}
+  \caption{Screen user is presented with}
+  \label{fig:screen}
+\end{figure}
+
 
 In the input cars activity, there is a form that the user fills out. The user can exit out of the form to prevent the location tracker from setting. There are checks to see if a user has filled the form out correctly. Once the user submits a car, they are taken back to the main activity, where the user can now start the location service.
 
@@ -116,8 +122,16 @@ The location service tracks the user, calculating distance traveled. Once the us
 %Probably talk about trip history here.
 From there the data from the sqlite database is queried in the Trip History activity that uses an adapter to display and populate the main layout accordingly.We use a RecyclerView since it is versatile for our purpose and added scrolling for better viewing.
 
-%------------------------------------------------
+%probably talk about your data viz stuff here.
+\begin{figure}[h!]
+  \includegraphics[width=\linewidth,height=14cm,keepaspectratio]{datavis.jpg}
+  \caption{Example visual user is greeted with}
+\end{figure}
+%write data viz stuff here
+Blah blah datavis stuff
 
+%------------------------------------------------
+\newpage
 \section{Development}
 
 The location service was implemented first, since it is the backbone of the project. We knew the main activity had to be the place where the user uses the most. The first order of business was to start a thread that implemented a location listener to track the distance between two points. The thread would receive updates from the location listener whenever the location changed, or if nothing happened within 10 seconds. When updates are received, certain variables within the thread are used. As long as callbacks and updates were not removed from the thread, meaning that the onDestroy function wasn't called, the thread would update values given to it by the location listener. When the onDestroy method was finally called, the thread would have a value called distance, in which kept track of the total distance traveled. The thread would then calculate the amount of CO2 used with a function. The thread communicates with the main activity with a local broadcast, sending information if the thread was explicitly called to stop, or destroyed.
